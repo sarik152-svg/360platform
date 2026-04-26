@@ -3,1293 +3,910 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Milliard — 360° Baholash Platformasi</title>
+<title>Milliard 360°</title>
 <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
-:root {
-  --ink: #0f0e0c;
-  --ink2: #3a3830;
-  --ink3: #7a7668;
-  --gold: #c8a84b;
-  --gold-light: #f5ecd4;
-  --gold-pale: #fdf8ee;
-  --surface: #ffffff;
-  --surface2: #faf9f6;
-  --surface3: #f3f1eb;
-  --border: #e8e4d9;
-  --red: #c0392b;
-  --green: #1a7a4a;
-  --blue: #1a4a8a;
-  --radius: 12px;
-  --radius-lg: 20px;
-}
-* { box-sizing: border-box; margin: 0; padding: 0; }
-html { scroll-behavior: smooth; }
-body { font-family: 'DM Sans', sans-serif; background: var(--surface2); color: var(--ink); min-height: 100vh; }
+:root{--ink:#0f0e0c;--ink2:#3a3830;--ink3:#7a7668;--gold:#c8a84b;--gold-light:#f5ecd4;--gold-pale:#fdf8ee;--s:#fff;--s2:#faf9f6;--s3:#f3f1eb;--border:#e8e4d9;--red:#c0392b;--green:#1a7a4a;--r:12px;--rl:20px;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'DM Sans',sans-serif;background:var(--s2);color:var(--ink);min-height:100vh;}
+nav{background:var(--ink);padding:0 1.5rem;display:flex;align-items:center;justify-content:space-between;height:56px;position:sticky;top:0;z-index:100;}
+.nav-logo{display:flex;align-items:center;gap:10px;}
+.nav-logo svg{height:22px;width:auto;}
+.nav-right{display:flex;align-items:center;gap:10px;}
+.nav-user{font-size:12px;color:#ffffff60;}
+#btnLogout{background:transparent;border:1px solid #ffffff20;color:#ffffff80;padding:4px 12px;border-radius:99px;font-size:12px;cursor:pointer;display:none;}
+#btnLogout:hover{border-color:#ffffff50;color:#fff;}
 
-/* ── NAV ── */
-nav { background: var(--ink); padding: 0 2rem; display: flex; align-items: center; justify-content: space-between; height: 60px; position: sticky; top: 0; z-index: 100; }
-.logo { font-family: 'DM Serif Display', serif; color: var(--gold); font-size: 20px; letter-spacing: -0.5px; }
-.logo span { color: #fff; font-size: 13px; font-family: 'DM Sans', sans-serif; font-weight: 300; margin-left: 8px; opacity: 0.6; }
-.nav-steps { display: flex; gap: 4px; }
-.nav-step { padding: 5px 14px; border-radius: 99px; font-size: 12px; color: #ffffff60; cursor: pointer; transition: all 0.2s; }
-.nav-step.active { background: var(--gold); color: var(--ink); font-weight: 500; }
+/* PAGES */
+.pg{display:none;max-width:740px;margin:0 auto;padding:2rem 1.25rem;min-height:calc(100vh - 56px);}
+.pg.on{display:block;}
+.pg-center{display:flex;align-items:center;justify-content:center;min-height:calc(100vh - 56px);}
 
-/* ── PAGES ── */
-.page { display: none; min-height: calc(100vh - 60px); padding: 3rem 2rem; max-width: 760px; margin: 0 auto; }
-.page.active { display: block; }
+/* LOGIN */
+.login-card{background:var(--s);border:1px solid var(--border);border-radius:var(--rl);padding:2.25rem;width:100%;max-width:380px;}
+.login-title{font-family:'DM Serif Display',serif;font-size:24px;text-align:center;margin-bottom:4px;}
+.login-sub{font-size:13px;color:var(--ink3);text-align:center;margin-bottom:1.5rem;}
+.tabs{display:flex;background:var(--s3);border-radius:var(--r);padding:3px;gap:3px;margin-bottom:1.5rem;}
+.tab{flex:1;padding:8px;border-radius:9px;border:none;font-size:13px;font-weight:500;cursor:pointer;background:transparent;color:var(--ink3);transition:all 0.15s;}
+.tab.on{background:var(--s);color:var(--ink);box-shadow:0 1px 3px rgba(0,0,0,0.1);}
 
-/* ── HERO ── */
-.hero { text-align: center; padding: 4rem 0 2rem; }
-.hero-badge { display: inline-block; background: var(--gold-light); color: var(--gold); font-size: 11px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; padding: 5px 16px; border-radius: 99px; margin-bottom: 1.5rem; }
-.hero h1 { font-family: 'DM Serif Display', serif; font-size: 52px; line-height: 1.1; color: var(--ink); margin-bottom: 1rem; }
-.hero h1 em { font-style: italic; color: var(--gold); }
-.hero p { font-size: 17px; color: var(--ink3); max-width: 500px; margin: 0 auto 2.5rem; line-height: 1.7; }
-.btn-primary { display: inline-block; background: var(--ink); color: #fff; padding: 14px 32px; border-radius: var(--radius); font-size: 15px; font-weight: 500; cursor: pointer; border: none; transition: all 0.2s; }
-.btn-primary:hover { background: var(--gold); color: var(--ink); transform: translateY(-1px); }
-.btn-outline { display: inline-block; background: transparent; color: var(--ink); padding: 13px 24px; border-radius: var(--radius); font-size: 14px; font-weight: 500; cursor: pointer; border: 1.5px solid var(--border); transition: all 0.2s; margin-left: 10px; }
-.btn-outline:hover { border-color: var(--ink); }
+/* FORMS */
+.fl{margin-bottom:14px;}
+.fl label{display:block;font-size:11px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;color:var(--ink2);margin-bottom:5px;}
+input,textarea,select{width:100%;padding:10px 13px;border:1px solid var(--border);border-radius:var(--r);font-family:'DM Sans',sans-serif;font-size:14px;color:var(--ink);background:var(--s2);outline:none;transition:border-color 0.2s;}
+input:focus,textarea:focus{border-color:var(--gold);background:var(--s);}
+.err{color:var(--red);font-size:12px;margin-top:6px;display:none;}
+.btn{display:block;width:100%;padding:12px;border-radius:var(--r);font-size:14px;font-weight:500;cursor:pointer;border:none;transition:all 0.2s;text-align:center;}
+.btn-dark{background:var(--ink);color:#fff;}
+.btn-dark:hover{background:var(--gold);color:var(--ink);}
+.btn-gold{background:var(--gold);color:var(--ink);font-weight:600;}
+.btn-gold:hover{opacity:0.88;}
+.btn-out{background:transparent;border:1.5px solid var(--border);color:var(--ink);}
+.btn-out:hover{border-color:var(--ink);}
+.btn:disabled{opacity:0.4;cursor:not-allowed;}
+.btn-sm{display:inline-block;width:auto;padding:7px 16px;font-size:13px;}
 
-/* ── HOW IT WORKS ── */
-.steps-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: var(--radius-lg); overflow: hidden; margin: 3rem 0; }
-.step-box { background: var(--surface); padding: 1.5rem 1.2rem; text-align: center; }
-.step-num { font-family: 'DM Serif Display', serif; font-size: 36px; color: var(--gold); line-height: 1; margin-bottom: 8px; }
-.step-title { font-size: 13px; font-weight: 600; color: var(--ink); margin-bottom: 4px; }
-.step-desc { font-size: 12px; color: var(--ink3); line-height: 1.5; }
+/* CARDS */
+.card{background:var(--s);border:1px solid var(--border);border-radius:var(--rl);padding:1.5rem;margin-bottom:1.25rem;}
+.card-title{font-family:'DM Serif Display',serif;font-size:19px;margin-bottom:3px;}
+.card-sub{font-size:13px;color:var(--ink3);margin-bottom:1.25rem;}
+.sec-hdr{font-size:10px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--ink3);padding-bottom:8px;border-bottom:1px solid var(--border);margin-bottom:12px;}
 
-/* ── FORM ── */
-.card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 2rem; margin-bottom: 1.5rem; }
-.card-title { font-family: 'DM Serif Display', serif; font-size: 22px; color: var(--ink); margin-bottom: 6px; }
-.card-sub { font-size: 13px; color: var(--ink3); margin-bottom: 1.5rem; }
-.field-label { font-size: 12px; font-weight: 600; letter-spacing: 0.05em; color: var(--ink2); margin-bottom: 6px; text-transform: uppercase; }
-.field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px; }
-input[type=text], input[type=email], input[type=tel], textarea, select {
-  width: 100%; padding: 10px 14px; border: 1px solid var(--border); border-radius: var(--radius);
-  font-family: 'DM Sans', sans-serif; font-size: 14px; color: var(--ink); background: var(--surface2);
-  transition: border-color 0.2s; outline: none;
-}
-input:focus, textarea:focus, select:focus { border-color: var(--gold); background: var(--surface); }
+/* GRID */
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.ucard{background:var(--s);border:1px solid var(--border);border-radius:var(--r);padding:1rem 1.25rem;cursor:pointer;transition:all 0.2s;}
+.ucard:hover{border-color:var(--gold);transform:translateY(-1px);}
+.ucard .un{font-size:14px;font-weight:600;}
+.ucard .ur{font-size:12px;color:var(--ink3);}
+.ucard .us{font-size:11px;color:var(--gold);margin-top:5px;font-weight:500;}
 
-/* ── EVALUATORS ── */
-.eval-group { margin-bottom: 1.5rem; }
-.eval-group-header { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
-.eval-icon { width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 14px; flex-shrink: 0; }
-.eval-group-title { font-size: 14px; font-weight: 600; color: var(--ink); }
-.eval-group-count { font-size: 12px; color: var(--ink3); }
-.eval-row { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; margin-bottom: 6px; }
-.eval-row input { font-size: 13px; padding: 8px 12px; }
+/* TABLE */
+.tbl{width:100%;border-collapse:collapse;font-size:13px;}
+.tbl th{text-align:left;font-size:10px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;color:var(--ink3);padding:8px 10px;border-bottom:1px solid var(--border);}
+.tbl td{padding:9px 10px;border-bottom:1px solid var(--border);color:var(--ink2);}
+.tbl tr:last-child td{border-bottom:none;}
+.code-box{font-family:monospace;font-size:16px;font-weight:800;background:var(--gold-pale);border:1px solid var(--gold-light);padding:3px 10px;border-radius:6px;letter-spacing:3px;}
+.dot{width:7px;height:7px;border-radius:50%;display:inline-block;margin-right:5px;}
+.dot-g{background:var(--green);}
+.dot-y{background:var(--gold);}
+.badge{display:inline-block;font-size:10px;font-weight:600;padding:2px 8px;border-radius:99px;}
+.bdg-g{background:#e8f5e9;color:var(--green);}
+.bdg-y{background:var(--gold-light);color:#7a5f00;}
 
-/* ── SURVEY ── */
-.survey-header { background: var(--ink); color: #fff; border-radius: var(--radius-lg); padding: 1.5rem 2rem; margin-bottom: 1.5rem; }
-.survey-header .role-badge { background: var(--gold); color: var(--ink); font-size: 11px; font-weight: 600; padding: 3px 12px; border-radius: 99px; display: inline-block; margin-bottom: 10px; }
-.survey-header h2 { font-family: 'DM Serif Display', serif; font-size: 24px; }
-.survey-header p { font-size: 13px; opacity: 0.6; margin-top: 4px; }
-.q-section { margin-bottom: 1.5rem; }
-.q-section-title { font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gold); margin-bottom: 12px; padding-bottom: 8px; border-bottom: 1px solid var(--border); }
-.q-item { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 1rem 1.25rem; margin-bottom: 8px; }
-.q-text { font-size: 14px; color: var(--ink); margin-bottom: 12px; line-height: 1.5; }
-.rating-row { display: flex; gap: 6px; }
-.r-btn { width: 36px; height: 36px; border: 1px solid var(--border); border-radius: 8px; background: var(--surface2); cursor: pointer; font-size: 13px; font-weight: 500; color: var(--ink3); transition: all 0.15s; display: flex; align-items: center; justify-content: center; }
-.r-btn:hover { border-color: var(--gold); color: var(--gold); }
-.r-btn.sel { background: var(--ink); color: #fff; border-color: var(--ink); }
-.r-labels { display: flex; justify-content: space-between; margin-top: 5px; }
-.r-labels span { font-size: 10px; color: var(--ink3); }
-.progress-wrap { background: var(--border); border-radius: 99px; height: 3px; margin-bottom: 1.5rem; overflow: hidden; }
-.progress-inner { height: 100%; background: var(--gold); border-radius: 99px; transition: width 0.4s; }
-.comment-area { width: 100%; padding: 10px 14px; border: 1px solid var(--border); border-radius: var(--radius); font-family: 'DM Sans'; font-size: 13px; color: var(--ink); background: var(--surface2); resize: vertical; min-height: 80px; margin-top: 8px; }
+/* EVAL GROUP */
+.eg{margin-bottom:1.25rem;}
+.eg-hdr{display:flex;align-items:center;gap:10px;margin-bottom:10px;}
+.eg-ico{width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0;}
+.eg-title{font-size:13px;font-weight:600;}
+.eg-row{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:6px;}
+.eg-row input{font-size:13px;padding:8px 11px;}
 
-/* ── RESULTS ── */
-.results-hero { background: var(--ink); border-radius: var(--radius-lg); padding: 2.5rem; color: #fff; margin-bottom: 1.5rem; position: relative; overflow: hidden; }
-.results-hero::before { content: '360°'; font-family: 'DM Serif Display', serif; font-size: 180px; color: rgba(200,168,75,0.08); position: absolute; right: -20px; top: -40px; line-height: 1; pointer-events: none; }
-.results-hero h2 { font-family: 'DM Serif Display', serif; font-size: 30px; margin-bottom: 6px; }
-.results-hero p { font-size: 14px; opacity: 0.6; }
-.score-overall { font-family: 'DM Serif Display', serif; font-size: 64px; color: var(--gold); line-height: 1; margin: 1rem 0 0.25rem; }
-.score-label { font-size: 13px; opacity: 0.5; }
-.metrics-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 1.5rem; }
-.metric-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 1rem 1.25rem; }
-.metric-name { font-size: 11px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink3); margin-bottom: 8px; }
-.metric-score { font-size: 28px; font-weight: 300; color: var(--ink); line-height: 1; margin-bottom: 8px; }
-.metric-score span { font-size: 13px; color: var(--ink3); }
-.metric-bar { height: 4px; background: var(--border); border-radius: 99px; overflow: hidden; }
-.metric-fill { height: 100%; border-radius: 99px; transition: width 0.8s; }
-.reviewer-breakdown { margin-bottom: 1.5rem; }
-.rb-title { font-family: 'DM Serif Display', serif; font-size: 18px; color: var(--ink); margin-bottom: 1rem; }
-.rb-row { display: flex; align-items: center; gap: 12px; padding: 10px 0; border-bottom: 1px solid var(--border); }
-.rb-icon { width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 15px; flex-shrink: 0; }
-.rb-name { font-size: 14px; color: var(--ink2); flex: 1; }
-.rb-score { font-size: 20px; font-weight: 300; color: var(--ink); }
-.rb-bar-wrap { width: 100px; }
-.rb-bar { height: 3px; background: var(--border); border-radius: 99px; overflow: hidden; }
-.rb-fill { height: 100%; border-radius: 99px; }
-.ai-section { background: var(--gold-pale); border: 1px solid var(--gold-light); border-radius: var(--radius-lg); padding: 2rem; margin-bottom: 1.5rem; }
-.ai-label { font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gold); margin-bottom: 1rem; display: flex; align-items: center; gap: 8px; }
-.ai-label::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--gold); display: inline-block; }
-.ai-content { font-size: 14px; color: var(--ink2); line-height: 1.8; }
-.ai-content h3 { font-family: 'DM Serif Display', serif; font-size: 18px; color: var(--ink); margin: 1.5rem 0 0.5rem; }
-.ai-content h3:first-child { margin-top: 0; }
-.ai-loading { display: flex; align-items: center; gap: 12px; padding: 1rem 0; }
-.ai-dots { display: flex; gap: 4px; }
-.ai-dots span { width: 6px; height: 6px; border-radius: 50%; background: var(--gold); animation: pulse 1.2s infinite; }
-.ai-dots span:nth-child(2) { animation-delay: 0.2s; }
-.ai-dots span:nth-child(3) { animation-delay: 0.4s; }
-@keyframes pulse { 0%,80%,100%{opacity:0.2} 40%{opacity:1} }
-.strengths-weak { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 1.5rem; }
-.sw-card { border-radius: var(--radius); padding: 1.25rem; }
-.sw-card.strong { background: #f0faf4; border: 1px solid #b7e4c7; }
-.sw-card.weak { background: #fef5f5; border: 1px solid #f5c6c6; }
-.sw-title { font-size: 12px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 10px; }
-.sw-card.strong .sw-title { color: var(--green); }
-.sw-card.weak .sw-title { color: var(--red); }
-.sw-item { font-size: 13px; color: var(--ink2); margin-bottom: 6px; display: flex; gap: 8px; line-height: 1.4; }
-.sw-item::before { content: '→'; font-size: 12px; flex-shrink: 0; margin-top: 1px; }
-.sw-card.strong .sw-item::before { color: var(--green); }
-.sw-card.weak .sw-item::before { color: var(--red); }
-.steps-action { margin-bottom: 1.5rem; }
-.step-action-item { display: flex; gap: 16px; padding: 1rem 0; border-bottom: 1px solid var(--border); align-items: flex-start; }
-.step-action-num { font-family: 'DM Serif Display', serif; font-size: 24px; color: var(--gold); flex-shrink: 0; line-height: 1; width: 28px; }
-.step-action-content h4 { font-size: 14px; font-weight: 600; color: var(--ink); margin-bottom: 3px; }
-.step-action-content p { font-size: 13px; color: var(--ink3); line-height: 1.5; }
-.tag { display: inline-block; font-size: 10px; font-weight: 600; padding: 2px 8px; border-radius: 99px; margin-bottom: 6px; }
-.tag.urgent { background: #fef0ee; color: #c0392b; }
-.tag.mid { background: #fff8e1; color: #b45309; }
-.tag.long { background: #e8f5e9; color: #1a7a4a; }
+/* SURVEY */
+.sv-hero{background:var(--ink);border-radius:var(--rl);padding:1.5rem;margin-bottom:1.25rem;color:#fff;}
+.sv-badge{background:var(--gold);color:var(--ink);font-size:11px;font-weight:600;padding:3px 12px;border-radius:99px;display:inline-block;margin-bottom:10px;}
+.sv-hero h2{font-family:'DM Serif Display',serif;font-size:20px;}
+.sv-hero p{font-size:12px;opacity:0.6;margin-top:3px;}
+.anon{display:inline-flex;align-items:center;gap:5px;background:#e8f5e9;border:1px solid #b7e4c7;border-radius:99px;padding:3px 12px;font-size:11px;color:var(--green);margin-top:8px;}
+.prog-wrap{background:var(--border);border-radius:99px;height:3px;margin-bottom:1.25rem;overflow:hidden;}
+.prog{height:100%;background:var(--gold);border-radius:99px;transition:width 0.3s;}
+.qs{margin-bottom:1.25rem;}
+.qs-title{font-size:10px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--gold);margin-bottom:8px;padding-bottom:6px;border-bottom:1px solid var(--border);}
+.qi{background:var(--s);border:1px solid var(--border);border-radius:var(--r);padding:1rem 1.1rem;margin-bottom:7px;}
+.qi-txt{font-size:13px;color:var(--ink);margin-bottom:9px;line-height:1.5;}
+.stars{display:flex;gap:5px;}
+.star{width:34px;height:34px;border:1px solid var(--border);border-radius:8px;background:var(--s2);cursor:pointer;font-size:13px;font-weight:500;color:var(--ink3);display:flex;align-items:center;justify-content:center;transition:all 0.12s;}
+.star:hover{border-color:var(--gold);color:var(--gold);}
+.star.on{background:var(--ink);color:#fff;border-color:var(--ink);}
+.rl{display:flex;justify-content:space-between;margin-top:4px;}
+.rl span{font-size:10px;color:var(--ink3);}
+textarea.comment{min-height:70px;resize:vertical;font-size:13px;}
 
-/* ── UTILS ── */
-.section-divider { height: 1px; background: var(--border); margin: 2rem 0; }
-.text-center { text-align: center; }
-.mt-1 { margin-top: 0.5rem; }
-.mt-2 { margin-top: 1rem; }
-.mt-3 { margin-top: 1.5rem; }
-.hidden { display: none !important; }
-.flex-between { display: flex; align-items: center; justify-content: space-between; }
-.chip { display: inline-flex; align-items: center; gap: 5px; background: var(--surface3); border: 1px solid var(--border); border-radius: 99px; padding: 4px 12px; font-size: 12px; color: var(--ink2); }
-.chip-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--green); }
+/* RESULTS */
+.res-hero{background:var(--ink);border-radius:var(--rl);padding:2rem;color:#fff;margin-bottom:1.25rem;position:relative;overflow:hidden;}
+.res-hero::before{content:'360°';font-family:'DM Serif Display',serif;font-size:140px;color:rgba(200,168,75,0.07);position:absolute;right:-10px;top:-20px;line-height:1;pointer-events:none;}
+.big-score{font-family:'DM Serif Display',serif;font-size:56px;color:var(--gold);line-height:1;margin:0.75rem 0 0.2rem;}
+.mg{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:1.25rem;}
+.mc{background:var(--s);border:1px solid var(--border);border-radius:var(--r);padding:1rem 1.1rem;}
+.mc-name{font-size:10px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;color:var(--ink3);margin-bottom:6px;}
+.mc-val{font-size:24px;font-weight:300;color:var(--ink);line-height:1;margin-bottom:6px;}
+.mc-val span{font-size:12px;color:var(--ink3);}
+.mbar{height:3px;background:var(--border);border-radius:99px;overflow:hidden;}
+.mfill{height:100%;border-radius:99px;}
+.rb-row{display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid var(--border);}
+.rb-row:last-child{border-bottom:none;}
+.rb-ico{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0;}
+.rb-name{font-size:13px;color:var(--ink2);flex:1;}
+.rb-bar{width:80px;height:3px;background:var(--border);border-radius:99px;overflow:hidden;}
+.rb-score{font-size:17px;font-weight:300;min-width:28px;text-align:right;}
+.sw{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:1.25rem;}
+.sw-card{border-radius:var(--r);padding:1.1rem;}
+.sw-s{background:#f0faf4;border:1px solid #b7e4c7;}
+.sw-w{background:#fef5f5;border:1px solid #f5c6c6;}
+.sw-t{font-size:10px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:8px;}
+.sw-s .sw-t{color:var(--green);}
+.sw-w .sw-t{color:var(--red);}
+.sw-i{font-size:12px;color:var(--ink2);margin-bottom:5px;display:flex;gap:5px;line-height:1.4;}
+.sw-i::before{content:'→';font-size:11px;flex-shrink:0;margin-top:1px;}
+.sw-s .sw-i::before{color:var(--green);}
+.sw-w .sw-i::before{color:var(--red);}
+.ai-box{background:var(--gold-pale);border:1px solid var(--gold-light);border-radius:var(--rl);padding:1.75rem;margin-bottom:1.25rem;}
+.ai-lbl{font-size:10px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--gold);margin-bottom:1rem;}
+.ai-txt{font-size:13px;color:var(--ink2);line-height:1.8;}
+.ai-txt h3{font-family:'DM Serif Display',serif;font-size:16px;color:var(--ink);margin:1rem 0 0.3rem;}
+.ai-txt h3:first-child{margin-top:0;}
+.dots{display:flex;gap:4px;align-items:center;}
+.dots span{width:6px;height:6px;border-radius:50%;background:var(--gold);animation:p 1.2s infinite;}
+.dots span:nth-child(2){animation-delay:0.2s;}
+.dots span:nth-child(3){animation-delay:0.4s;}
+@keyframes p{0%,80%,100%{opacity:0.2}40%{opacity:1}}
+.act-item{display:flex;gap:12px;padding:0.9rem 0;border-bottom:1px solid var(--border);align-items:flex-start;}
+.act-item:last-child{border-bottom:none;}
+.act-num{font-family:'DM Serif Display',serif;font-size:20px;color:var(--gold);flex-shrink:0;width:24px;line-height:1;}
+.act-body h4{font-size:13px;font-weight:600;margin-bottom:3px;}
+.act-body p{font-size:12px;color:var(--ink3);line-height:1.5;}
+.tag{display:inline-block;font-size:10px;font-weight:600;padding:2px 8px;border-radius:99px;margin-bottom:5px;}
+.t-r{background:#fef0ee;color:var(--red);}
+.t-y{background:#fff8e1;color:#b45309;}
+.t-g{background:#e8f5e9;color:var(--green);}
 
-/* Survey invite page */
-.invite-hero { text-align: center; padding: 3rem 1rem; }
-.invite-hero .avatar { width: 72px; height: 72px; border-radius: 50%; background: var(--gold-light); border: 2px solid var(--gold); display: flex; align-items: center; justify-content: center; font-family: 'DM Serif Display'; font-size: 28px; color: var(--gold); margin: 0 auto 1.5rem; }
-.invite-hero h2 { font-family: 'DM Serif Display', serif; font-size: 26px; color: var(--ink); margin-bottom: 8px; }
-.invite-hero p { font-size: 14px; color: var(--ink3); max-width: 400px; margin: 0 auto; line-height: 1.6; }
-.anon-badge { display: inline-flex; align-items: center; gap: 6px; background: #e8f5e9; border: 1px solid #b7e4c7; border-radius: 99px; padding: 5px 14px; font-size: 12px; color: var(--green); font-weight: 500; margin-top: 1rem; }
+/* TOAST */
+#toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:var(--ink);color:#fff;padding:11px 22px;border-radius:99px;font-size:13px;z-index:9999;opacity:0;transition:opacity 0.3s;pointer-events:none;}
 
-/* Contacts table */
-.contacts-table { width: 100%; border-collapse: collapse; font-size: 13px; }
-.contacts-table th { text-align: left; font-size: 11px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink3); padding: 8px 12px; border-bottom: 1px solid var(--border); }
-.contacts-table td { padding: 10px 12px; border-bottom: 1px solid var(--border); color: var(--ink2); }
-.contacts-table tr:last-child td { border-bottom: none; }
-.status-dot { width: 8px; height: 8px; border-radius: 50%; display: inline-block; margin-right: 6px; }
-.status-done { background: var(--green); }
-.status-pending { background: var(--gold); }
-
-/* Radar chart canvas */
-#radarCanvas { display: block; margin: 0 auto; }
-
-/* Animations */
-@keyframes fadeUp { from{opacity:0;transform:translateY(16px)} to{opacity:1;transform:translateY(0)} }
-.fade-up { animation: fadeUp 0.4s ease forwards; }
+/* UTILS */
+.mt1{margin-top:0.5rem;}.mt2{margin-top:1rem;}.mt3{margin-top:1.5rem;}
+.fb{display:flex;align-items:center;justify-content:space-between;}
+.chip{display:inline-flex;align-items:center;gap:5px;background:var(--s3);border:1px solid var(--border);border-radius:99px;padding:3px 10px;font-size:11px;color:var(--ink2);}
+@keyframes fu{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+.fu{animation:fu 0.3s ease forwards;}
 </style>
 </head>
 <body>
 
 <nav>
-  <div style="display:flex;align-items:center;gap:12px;">
-    <svg viewBox="0 0 2388 2066" fill="none" xmlns="http://www.w3.org/2000/svg" style="height:26px;width:auto;display:block;">
-<path fill-rule="evenodd" clip-rule="evenodd" d="M479.301 1829.78V2065.19H436.404V1829.78H479.301ZM894.409 300.134C971.267 300.134 1033.55 362.42 1033.55 439.262C1033.55 516.089 971.267 578.358 894.409 578.358C817.565 578.358 755.268 516.089 755.268 439.262C755.268 362.42 817.565 300.134 894.409 300.134ZM656.906 300.143H684.725H712.544V578.372H656.903V355.787H629.083V300.143H656.906ZM1193.59 0C1397.52 0 1582.16 82.6544 1715.8 216.269C1849.45 349.878 1932.11 534.476 1932.11 738.367C1932.11 942.258 1849.45 1126.85 1715.8 1260.47C1582.16 1394.08 1397.53 1476.73 1193.59 1476.73C989.661 1476.73 805.023 1394.08 671.383 1260.47C537.739 1126.86 455.07 942.261 455.07 738.367C455.07 678.013 462.388 619.226 476.126 562.861C486.193 521.571 499.712 481.666 516.358 443.512H601.1C581.595 482.622 565.825 523.965 554.312 567.038C539.703 621.621 531.917 679.08 531.917 738.367C531.917 921.037 605.981 1086.43 725.714 1206.14C845.434 1325.85 1010.86 1399.9 1193.59 1399.9C1376.29 1399.9 1541.72 1325.85 1661.46 1206.14C1781.19 1086.43 1855.26 921.037 1855.26 738.367C1855.26 555.683 1781.19 390.289 1661.46 270.594C1541.72 150.882 1376.29 76.839 1193.59 76.839C1108.98 76.839 1028.13 92.6846 953.879 121.541C895.511 144.237 841.127 174.978 792.167 212.406H675.39C739.501 149.264 815.131 97.7056 898.8 61.2338C989.139 21.869 1088.86 0 1193.59 0ZM1492.76 898.376C1569.61 898.376 1631.91 960.645 1631.91 1037.47C1631.91 1114.31 1569.61 1176.6 1492.76 1176.6C1415.91 1176.6 1353.61 1114.31 1353.61 1037.47C1353.61 960.645 1415.91 898.376 1492.76 898.376ZM1492.76 951.852C1540.03 951.852 1578.41 990.208 1578.41 1037.47C1578.41 1084.74 1540.03 1123.11 1492.76 1123.11C1445.48 1123.11 1407.13 1084.74 1407.13 1037.47C1407.13 990.208 1445.48 951.852 1492.76 951.852ZM1193.58 898.376C1270.44 898.376 1332.72 960.645 1332.72 1037.47C1332.72 1114.31 1270.44 1176.6 1193.58 1176.6C1116.75 1176.6 1054.45 1114.31 1054.45 1037.47C1054.45 960.645 1116.75 898.376 1193.58 898.376ZM1193.58 951.852C1240.86 951.852 1279.24 990.208 1279.24 1037.47C1279.24 1084.74 1240.86 1123.11 1193.58 1123.11C1146.3 1123.11 1107.95 1084.74 1107.95 1037.47C1107.95 990.208 1146.3 951.852 1193.58 951.852ZM894.409 898.376C971.267 898.376 1033.55 960.645 1033.55 1037.47C1033.55 1114.31 971.267 1176.6 894.409 1176.6C817.565 1176.6 755.268 1114.31 755.268 1037.47C755.268 960.645 817.565 898.376 894.409 898.376ZM894.409 951.852C941.695 951.852 980.05 990.208 980.05 1037.47C980.05 1084.74 941.695 1123.11 894.409 1123.11C847.12 1123.11 808.755 1084.74 808.755 1037.47C808.755 990.208 847.12 951.852 894.409 951.852ZM1492.75 599.239C1569.6 599.239 1631.91 661.552 1631.91 738.364C1631.91 815.177 1569.6 877.489 1492.75 877.489C1415.91 877.489 1353.6 815.177 1353.6 738.364C1353.6 661.552 1415.91 599.239 1492.75 599.239ZM1492.75 652.732C1540.02 652.732 1578.4 691.103 1578.4 738.364C1578.4 785.625 1540.02 823.997 1492.75 823.997C1445.48 823.997 1407.12 785.625 1407.12 738.364C1407.12 691.103 1445.48 652.732 1492.75 652.732ZM1193.57 599.239C1270.43 599.239 1332.72 661.552 1332.72 738.364C1332.72 815.177 1270.43 877.489 1193.57 877.489C1116.75 877.489 1054.45 815.177 1054.45 738.364C1054.45 661.552 1116.75 599.239 1193.57 599.239ZM1193.57 652.732C1240.85 652.732 1279.23 691.103 1279.23 738.364C1279.23 785.625 1240.85 823.997 1193.57 823.997C1146.29 823.997 1107.94 785.625 1107.94 738.364C1107.94 691.103 1146.29 652.732 1193.57 652.732ZM894.406 599.239C971.264 599.239 1033.54 661.552 1033.54 738.364C1033.54 815.177 971.264 877.489 894.406 877.489C817.562 877.489 755.265 815.177 755.265 738.364C755.265 661.552 817.562 599.239 894.406 599.239ZM894.406 652.732C941.692 652.732 980.048 691.103 980.048 738.364C980.048 785.625 941.692 823.997 894.406 823.997C847.117 823.997 808.752 785.625 808.752 738.364C808.752 691.103 847.117 652.732 894.406 652.732ZM1492.75 300.131C1569.6 300.131 1631.9 362.417 1631.9 439.259C1631.9 516.086 1569.6 578.355 1492.75 578.355C1415.91 578.355 1353.6 516.086 1353.6 439.259C1353.6 362.417 1415.91 300.131 1492.75 300.131ZM1492.75 353.618C1540.02 353.618 1578.4 391.989 1578.4 439.259C1578.4 486.52 1540.02 524.877 1492.75 524.877C1445.48 524.877 1407.12 486.52 1407.12 439.259C1407.12 391.989 1445.48 353.618 1492.75 353.618ZM1193.57 300.131C1270.43 300.131 1332.72 362.417 1332.72 439.259C1332.72 516.086 1270.43 578.355 1193.57 578.355C1116.74 578.355 1054.45 516.086 1054.45 439.259C1054.45 362.417 1116.74 300.131 1193.57 300.131ZM1193.57 353.618C1240.85 353.618 1279.23 391.989 1279.23 439.259C1279.23 486.52 1240.85 524.877 1193.57 524.877C1146.29 524.877 1107.94 486.52 1107.94 439.259C1107.94 391.989 1146.29 353.618 1193.57 353.618ZM894.403 353.618C941.689 353.618 980.045 391.989 980.045 439.259C980.045 486.52 941.689 524.877 894.403 524.877C847.114 524.877 808.749 486.52 808.749 439.259C808.749 391.989 847.114 353.618 894.403 353.618ZM272.048 1899.72L157.475 1999.36L42.8825 1899.72V2065.19H0V1829.78H22.2108L157.475 1947.37L274.575 1845.55C290.881 1831.36 286.742 1829.78 307.566 1829.78H314.921V2065.19H272.048V1899.72ZM2137.85 2065.03V1829.63H2269.43C2334.21 1829.63 2387.17 1882.55 2387.17 1947.32C2387.17 2012.09 2334.17 2065.03 2269.43 2065.03H2137.85ZM2180.73 2030.83H2269.42C2313.73 2030.83 2344.28 1989.42 2344.28 1947.32C2344.28 1905.23 2313.72 1863.82 2269.42 1863.82H2180.73V2030.83ZM1955.79 1964.07L2022.74 2065.03H1971.59L1906.07 1964.96L1905.68 1964.42H1885.33L1856.24 1964.49L1817.73 1964.42V2065.03H1774.84V1829.63H1948.95C1986.05 1829.63 2016.38 1859.93 2016.35 1897.74L2016.36 1897.39C2016.24 1932.08 1989.62 1960.65 1955.79 1964.07ZM1817.73 1863.8V1930.23H1856.22L1885.31 1930.15L1936.16 1930.08L1938.88 1930.16C1957 1930.16 1972.02 1915.36 1972.02 1897.19V1897.02C1972.02 1878.82 1957.1 1863.87 1938.88 1863.87H1856.24L1817.73 1863.8ZM1492.3 1856.7L1476.84 1829.63H1523.2L1658.74 2065.03H1611.15L1588.62 2025.48C1587.78 2023.78 1586.86 2022.11 1585.82 2020.53L1585.4 2019.89L1511.92 1891.06L1453.82 1991.64C1453.64 1992 1453.56 1992.15 1453.46 1992.28L1411.44 2065.03H1371.98L1492.3 1856.7ZM1255.89 1829.78V2065.19H1213V1829.78H1255.89ZM949.754 2031H1091.52V2065.19H906.877V1829.78H949.751L949.754 2031ZM643.648 2031H785.407V2065.19H600.763V1829.78H643.645L643.648 2031Z" fill="rgba(255,255,255,0.85)"/>
-</svg>
-    <span style="color:#ffffff40;font-size:12px;font-family:'DM Sans',sans-serif;font-weight:300;letter-spacing:0.05em;">360° Baholash</span>
+  <div class="nav-logo">
+    <svg viewBox="0 0 2388 2066" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path fill-rule="evenodd" clip-rule="evenodd" d="M479.301 1829.78V2065.19H436.404V1829.78H479.301ZM894.409 300.134C971.267 300.134 1033.55 362.42 1033.55 439.262C1033.55 516.089 971.267 578.358 894.409 578.358C817.565 578.358 755.268 516.089 755.268 439.262C755.268 362.42 817.565 300.134 894.409 300.134ZM656.906 300.143H684.725H712.544V578.372H656.903V355.787H629.083V300.143H656.906ZM1193.59 0C1397.52 0 1582.16 82.6544 1715.8 216.269C1849.45 349.878 1932.11 534.476 1932.11 738.367C1932.11 942.258 1849.45 1126.85 1715.8 1260.47C1582.16 1394.08 1397.53 1476.73 1193.59 1476.73C989.661 1476.73 805.023 1394.08 671.383 1260.47C537.739 1126.86 455.07 942.261 455.07 738.367C455.07 678.013 462.388 619.226 476.126 562.861C486.193 521.571 499.712 481.666 516.358 443.512H601.1C581.595 482.622 565.825 523.965 554.312 567.038C539.703 621.621 531.917 679.08 531.917 738.367C531.917 921.037 605.981 1086.43 725.714 1206.14C845.434 1325.85 1010.86 1399.9 1193.59 1399.9C1376.29 1399.9 1541.72 1325.85 1661.46 1206.14C1781.19 1086.43 1855.26 921.037 1855.26 738.367C1855.26 555.683 1781.19 390.289 1661.46 270.594C1541.72 150.882 1376.29 76.839 1193.59 76.839C1108.98 76.839 1028.13 92.6846 953.879 121.541C895.511 144.237 841.127 174.978 792.167 212.406H675.39C739.501 149.264 815.131 97.7056 898.8 61.2338C989.139 21.869 1088.86 0 1193.59 0ZM1492.76 898.376C1569.61 898.376 1631.91 960.645 1631.91 1037.47C1631.91 1114.31 1569.61 1176.6 1492.76 1176.6C1415.91 1176.6 1353.61 1114.31 1353.61 1037.47C1353.61 960.645 1415.91 898.376 1492.76 898.376ZM1492.76 951.852C1540.03 951.852 1578.41 990.208 1578.41 1037.47C1578.41 1084.74 1540.03 1123.11 1492.76 1123.11C1445.48 1123.11 1407.13 1084.74 1407.13 1037.47C1407.13 990.208 1445.48 951.852 1492.76 951.852ZM1193.58 898.376C1270.44 898.376 1332.72 960.645 1332.72 1037.47C1332.72 1114.31 1270.44 1176.6 1193.58 1176.6C1116.75 1176.6 1054.45 1114.31 1054.45 1037.47C1054.45 960.645 1116.75 898.376 1193.58 898.376ZM1193.58 951.852C1240.86 951.852 1279.24 990.208 1279.24 1037.47C1279.24 1084.74 1240.86 1123.11 1193.58 1123.11C1146.3 1123.11 1107.95 1084.74 1107.95 1037.47C1107.95 990.208 1146.3 951.852 1193.58 951.852ZM894.409 898.376C971.267 898.376 1033.55 960.645 1033.55 1037.47C1033.55 1114.31 971.267 1176.6 894.409 1176.6C817.565 1176.6 755.268 1114.31 755.268 1037.47C755.268 960.645 817.565 898.376 894.409 898.376ZM894.409 951.852C941.695 951.852 980.05 990.208 980.05 1037.47C980.05 1084.74 941.695 1123.11 894.409 1123.11C847.12 1123.11 808.755 1084.74 808.755 1037.47C808.755 990.208 847.12 951.852 894.409 951.852ZM1492.75 599.239C1569.6 599.239 1631.91 661.552 1631.91 738.364C1631.91 815.177 1569.6 877.489 1492.75 877.489C1415.91 877.489 1353.6 815.177 1353.6 738.364C1353.6 661.552 1415.91 599.239 1492.75 599.239ZM1492.75 652.732C1540.02 652.732 1578.4 691.103 1578.4 738.364C1578.4 785.625 1540.02 823.997 1492.75 823.997C1445.48 823.997 1407.12 785.625 1407.12 738.364C1407.12 691.103 1445.48 652.732 1492.75 652.732ZM1193.57 599.239C1270.43 599.239 1332.72 661.552 1332.72 738.364C1332.72 815.177 1270.43 877.489 1193.57 877.489C1116.75 877.489 1054.45 815.177 1054.45 738.364C1054.45 661.552 1116.75 599.239 1193.57 599.239ZM1193.57 652.732C1240.85 652.732 1279.23 691.103 1279.23 738.364C1279.23 785.625 1240.85 823.997 1193.57 823.997C1146.29 823.997 1107.94 785.625 1107.94 738.364C1107.94 691.103 1146.29 652.732 1193.57 652.732ZM894.406 599.239C971.264 599.239 1033.54 661.552 1033.54 738.364C1033.54 815.177 971.264 877.489 894.406 877.489C817.562 877.489 755.265 815.177 755.265 738.364C755.265 661.552 817.562 599.239 894.406 599.239ZM894.406 652.732C941.692 652.732 980.048 691.103 980.048 738.364C980.048 785.625 941.692 823.997 894.406 823.997C847.117 823.997 808.752 785.625 808.752 738.364C808.752 691.103 847.117 652.732 894.406 652.732ZM1492.75 300.131C1569.6 300.131 1631.9 362.417 1631.9 439.259C1631.9 516.086 1569.6 578.355 1492.75 578.355C1415.91 578.355 1353.6 516.086 1353.6 439.259C1353.6 362.417 1415.91 300.131 1492.75 300.131ZM1492.75 353.618C1540.02 353.618 1578.4 391.989 1578.4 439.259C1578.4 486.52 1540.02 524.877 1492.75 524.877C1445.48 524.877 1407.12 486.52 1407.12 439.259C1407.12 391.989 1445.48 353.618 1492.75 353.618ZM1193.57 300.131C1270.43 300.131 1332.72 362.417 1332.72 439.259C1332.72 516.086 1270.43 578.355 1193.57 578.355C1116.74 578.355 1054.45 516.086 1054.45 439.259C1054.45 362.417 1116.74 300.131 1193.57 300.131ZM1193.57 353.618C1240.85 353.618 1279.23 391.989 1279.23 439.259C1279.23 486.52 1240.85 524.877 1193.57 524.877C1146.29 524.877 1107.94 486.52 1107.94 439.259C1107.94 391.989 1146.29 353.618 1193.57 353.618ZM894.403 353.618C941.689 353.618 980.045 391.989 980.045 439.259C980.045 486.52 941.689 524.877 894.403 524.877C847.114 524.877 808.749 486.52 808.749 439.259C808.749 391.989 847.114 353.618 894.403 353.618ZM272.048 1899.72L157.475 1999.36L42.8825 1899.72V2065.19H0V1829.78H22.2108L157.475 1947.37L274.575 1845.55C290.881 1831.36 286.742 1829.78 307.566 1829.78H314.921V2065.19H272.048V1899.72ZM2137.85 2065.03V1829.63H2269.43C2334.21 1829.63 2387.17 1882.55 2387.17 1947.32C2387.17 2012.09 2334.17 2065.03 2269.43 2065.03H2137.85ZM2180.73 2030.83H2269.42C2313.73 2030.83 2344.28 1989.42 2344.28 1947.32C2344.28 1905.23 2313.72 1863.82 2269.42 1863.82H2180.73V2030.83ZM1955.79 1964.07L2022.74 2065.03H1971.59L1906.07 1964.96L1905.68 1964.42H1885.33L1856.24 1964.49L1817.73 1964.42V2065.03H1774.84V1829.63H1948.95C1986.05 1829.63 2016.38 1859.93 2016.35 1897.74L2016.36 1897.39C2016.24 1932.08 1989.62 1960.65 1955.79 1964.07ZM1817.73 1863.8V1930.23H1856.22L1885.31 1930.15L1936.16 1930.08L1938.88 1930.16C1957 1930.16 1972.02 1915.36 1972.02 1897.19V1897.02C1972.02 1878.82 1957.1 1863.87 1938.88 1863.87H1856.24L1817.73 1863.8ZM1492.3 1856.7L1476.84 1829.63H1523.2L1658.74 2065.03H1611.15L1588.62 2025.48C1587.78 2023.78 1586.86 2022.11 1585.82 2020.53L1585.4 2019.89L1511.92 1891.06L1453.82 1991.64C1453.64 1992 1453.56 1992.15 1453.46 1992.28L1411.44 2065.03H1371.98L1492.3 1856.7ZM1255.89 1829.78V2065.19H1213V1829.78H1255.89ZM949.754 2031H1091.52V2065.19H906.877V1829.78H949.751L949.754 2031ZM643.648 2031H785.407V2065.19H600.763V1829.78H643.645L643.648 2031Z" fill="url(#lg)"/>
+      <defs><linearGradient id="lg" x1="0" y1="1032.6" x2="2387.17" y2="1032.6" gradientUnits="userSpaceOnUse">
+        <stop stop-color="rgba(255,255,255,0.5)"/><stop offset="0.3" stop-color="#c8a84b"/><stop offset="0.51" stop-color="#e8d090"/>
+        <stop offset="0.64" stop-color="#fff8dc"/><stop offset="0.78" stop-color="#c8a84b"/><stop offset="1" stop-color="rgba(255,255,255,0.5)"/>
+      </linearGradient></defs>
+    </svg>
+    <span style="color:#ffffff30;font-size:11px;">360°</span>
   </div>
-  <div style="display:flex;align-items:center;gap:8px;">
-    <div class="nav-steps" id="navSteps">
-      <div class="nav-step active" data-page="landing">Bosh sahifa</div>
-      <div class="nav-step" data-page="setup">Sozlash</div>
-      <div class="nav-step" data-page="survey">Baholash</div>
-      <div class="nav-step" data-page="results">Natijalar</div>
-    </div>
-    <button onclick="showLoginPage()" style="background:var(--gold);color:var(--ink);border:none;
-      padding:7px 16px;border-radius:99px;font-size:12px;font-weight:600;cursor:pointer;
-      margin-left:8px;white-space:nowrap;">🔐 Kod bilan kirish</button>
+  <div class="nav-right">
+    <span class="nav-user" id="navName"></span>
+    <button id="btnLogout" onclick="logout()">Chiqish</button>
   </div>
 </nav>
 
-<!-- ═══════════════════════════════ LANDING ═══════════════════════════════ -->
-<div id="page-landing" class="page active">
-  <div class="hero fade-up">
-    <div style="margin-bottom:1.5rem;display:flex;justify-content:center;">
-      <svg viewBox="0 0 2388 2066" fill="none" xmlns="http://www.w3.org/2000/svg" style="height:40px;width:auto;display:block;">
-<path fill-rule="evenodd" clip-rule="evenodd" d="M479.301 1829.78V2065.19H436.404V1829.78H479.301ZM894.409 300.134C971.267 300.134 1033.55 362.42 1033.55 439.262C1033.55 516.089 971.267 578.358 894.409 578.358C817.565 578.358 755.268 516.089 755.268 439.262C755.268 362.42 817.565 300.134 894.409 300.134ZM656.906 300.143H684.725H712.544V578.372H656.903V355.787H629.083V300.143H656.906ZM1193.59 0C1397.52 0 1582.16 82.6544 1715.8 216.269C1849.45 349.878 1932.11 534.476 1932.11 738.367C1932.11 942.258 1849.45 1126.85 1715.8 1260.47C1582.16 1394.08 1397.53 1476.73 1193.59 1476.73C989.661 1476.73 805.023 1394.08 671.383 1260.47C537.739 1126.86 455.07 942.261 455.07 738.367C455.07 678.013 462.388 619.226 476.126 562.861C486.193 521.571 499.712 481.666 516.358 443.512H601.1C581.595 482.622 565.825 523.965 554.312 567.038C539.703 621.621 531.917 679.08 531.917 738.367C531.917 921.037 605.981 1086.43 725.714 1206.14C845.434 1325.85 1010.86 1399.9 1193.59 1399.9C1376.29 1399.9 1541.72 1325.85 1661.46 1206.14C1781.19 1086.43 1855.26 921.037 1855.26 738.367C1855.26 555.683 1781.19 390.289 1661.46 270.594C1541.72 150.882 1376.29 76.839 1193.59 76.839C1108.98 76.839 1028.13 92.6846 953.879 121.541C895.511 144.237 841.127 174.978 792.167 212.406H675.39C739.501 149.264 815.131 97.7056 898.8 61.2338C989.139 21.869 1088.86 0 1193.59 0ZM1492.76 898.376C1569.61 898.376 1631.91 960.645 1631.91 1037.47C1631.91 1114.31 1569.61 1176.6 1492.76 1176.6C1415.91 1176.6 1353.61 1114.31 1353.61 1037.47C1353.61 960.645 1415.91 898.376 1492.76 898.376ZM1492.76 951.852C1540.03 951.852 1578.41 990.208 1578.41 1037.47C1578.41 1084.74 1540.03 1123.11 1492.76 1123.11C1445.48 1123.11 1407.13 1084.74 1407.13 1037.47C1407.13 990.208 1445.48 951.852 1492.76 951.852ZM1193.58 898.376C1270.44 898.376 1332.72 960.645 1332.72 1037.47C1332.72 1114.31 1270.44 1176.6 1193.58 1176.6C1116.75 1176.6 1054.45 1114.31 1054.45 1037.47C1054.45 960.645 1116.75 898.376 1193.58 898.376ZM1193.58 951.852C1240.86 951.852 1279.24 990.208 1279.24 1037.47C1279.24 1084.74 1240.86 1123.11 1193.58 1123.11C1146.3 1123.11 1107.95 1084.74 1107.95 1037.47C1107.95 990.208 1146.3 951.852 1193.58 951.852ZM894.409 898.376C971.267 898.376 1033.55 960.645 1033.55 1037.47C1033.55 1114.31 971.267 1176.6 894.409 1176.6C817.565 1176.6 755.268 1114.31 755.268 1037.47C755.268 960.645 817.565 898.376 894.409 898.376ZM894.409 951.852C941.695 951.852 980.05 990.208 980.05 1037.47C980.05 1084.74 941.695 1123.11 894.409 1123.11C847.12 1123.11 808.755 1084.74 808.755 1037.47C808.755 990.208 847.12 951.852 894.409 951.852ZM1492.75 599.239C1569.6 599.239 1631.91 661.552 1631.91 738.364C1631.91 815.177 1569.6 877.489 1492.75 877.489C1415.91 877.489 1353.6 815.177 1353.6 738.364C1353.6 661.552 1415.91 599.239 1492.75 599.239ZM1492.75 652.732C1540.02 652.732 1578.4 691.103 1578.4 738.364C1578.4 785.625 1540.02 823.997 1492.75 823.997C1445.48 823.997 1407.12 785.625 1407.12 738.364C1407.12 691.103 1445.48 652.732 1492.75 652.732ZM1193.57 599.239C1270.43 599.239 1332.72 661.552 1332.72 738.364C1332.72 815.177 1270.43 877.489 1193.57 877.489C1116.75 877.489 1054.45 815.177 1054.45 738.364C1054.45 661.552 1116.75 599.239 1193.57 599.239ZM1193.57 652.732C1240.85 652.732 1279.23 691.103 1279.23 738.364C1279.23 785.625 1240.85 823.997 1193.57 823.997C1146.29 823.997 1107.94 785.625 1107.94 738.364C1107.94 691.103 1146.29 652.732 1193.57 652.732ZM894.406 599.239C971.264 599.239 1033.54 661.552 1033.54 738.364C1033.54 815.177 971.264 877.489 894.406 877.489C817.562 877.489 755.265 815.177 755.265 738.364C755.265 661.552 817.562 599.239 894.406 599.239ZM894.406 652.732C941.692 652.732 980.048 691.103 980.048 738.364C980.048 785.625 941.692 823.997 894.406 823.997C847.117 823.997 808.752 785.625 808.752 738.364C808.752 691.103 847.117 652.732 894.406 652.732ZM1492.75 300.131C1569.6 300.131 1631.9 362.417 1631.9 439.259C1631.9 516.086 1569.6 578.355 1492.75 578.355C1415.91 578.355 1353.6 516.086 1353.6 439.259C1353.6 362.417 1415.91 300.131 1492.75 300.131ZM1492.75 353.618C1540.02 353.618 1578.4 391.989 1578.4 439.259C1578.4 486.52 1540.02 524.877 1492.75 524.877C1445.48 524.877 1407.12 486.52 1407.12 439.259C1407.12 391.989 1445.48 353.618 1492.75 353.618ZM1193.57 300.131C1270.43 300.131 1332.72 362.417 1332.72 439.259C1332.72 516.086 1270.43 578.355 1193.57 578.355C1116.74 578.355 1054.45 516.086 1054.45 439.259C1054.45 362.417 1116.74 300.131 1193.57 300.131ZM1193.57 353.618C1240.85 353.618 1279.23 391.989 1279.23 439.259C1279.23 486.52 1240.85 524.877 1193.57 524.877C1146.29 524.877 1107.94 486.52 1107.94 439.259C1107.94 391.989 1146.29 353.618 1193.57 353.618ZM894.403 353.618C941.689 353.618 980.045 391.989 980.045 439.259C980.045 486.52 941.689 524.877 894.403 524.877C847.114 524.877 808.749 486.52 808.749 439.259C808.749 391.989 847.114 353.618 894.403 353.618ZM272.048 1899.72L157.475 1999.36L42.8825 1899.72V2065.19H0V1829.78H22.2108L157.475 1947.37L274.575 1845.55C290.881 1831.36 286.742 1829.78 307.566 1829.78H314.921V2065.19H272.048V1899.72ZM2137.85 2065.03V1829.63H2269.43C2334.21 1829.63 2387.17 1882.55 2387.17 1947.32C2387.17 2012.09 2334.17 2065.03 2269.43 2065.03H2137.85ZM2180.73 2030.83H2269.42C2313.73 2030.83 2344.28 1989.42 2344.28 1947.32C2344.28 1905.23 2313.72 1863.82 2269.42 1863.82H2180.73V2030.83ZM1955.79 1964.07L2022.74 2065.03H1971.59L1906.07 1964.96L1905.68 1964.42H1885.33L1856.24 1964.49L1817.73 1964.42V2065.03H1774.84V1829.63H1948.95C1986.05 1829.63 2016.38 1859.93 2016.35 1897.74L2016.36 1897.39C2016.24 1932.08 1989.62 1960.65 1955.79 1964.07ZM1817.73 1863.8V1930.23H1856.22L1885.31 1930.15L1936.16 1930.08L1938.88 1930.16C1957 1930.16 1972.02 1915.36 1972.02 1897.19V1897.02C1972.02 1878.82 1957.1 1863.87 1938.88 1863.87H1856.24L1817.73 1863.8ZM1492.3 1856.7L1476.84 1829.63H1523.2L1658.74 2065.03H1611.15L1588.62 2025.48C1587.78 2023.78 1586.86 2022.11 1585.82 2020.53L1585.4 2019.89L1511.92 1891.06L1453.82 1991.64C1453.64 1992 1453.56 1992.15 1453.46 1992.28L1411.44 2065.03H1371.98L1492.3 1856.7ZM1255.89 1829.78V2065.19H1213V1829.78H1255.89ZM949.754 2031H1091.52V2065.19H906.877V1829.78H949.751L949.754 2031ZM643.648 2031H785.407V2065.19H600.763V1829.78H643.645L643.648 2031Z" fill="url(#gold_grad)"/>
-<defs><linearGradient id="gold_grad" x1="0" y1="1032.6" x2="2387.17" y2="1032.6" gradientUnits="userSpaceOnUse">
-<stop stop-color="#7A7A7A"/><stop offset="0.3" stop-color="#BD9555"/><stop offset="0.51" stop-color="#D7C982"/>
-<stop offset="0.64" stop-color="#FCEFCF"/><stop offset="0.78" stop-color="#E1B16E"/><stop offset="1" stop-color="#9A783A"/>
-</linearGradient></defs></svg>
-    </div>
-    <div class="hero-badge">O'zbek tilidagi birinchi platform</div>
-    <h1>O'zingizni <em>360°</em><br>ko'ring</h1>
-    <p>Xodimlar, hamkorlar, mijozlar va yaqinlaringiz ko'zi bilan — sun'iy intellekt tahlili orqali to'liq liderlik portreti.</p>
-    <button class="btn-primary" onclick="goPage('setup')">Boshlash — bepul</button>
-    <button class="btn-outline" onclick="loadDemo()">Demo natijani ko'rish</button>
-  </div>
+<div id="toast"></div>
 
-  <div style="background:var(--ink);border-radius:var(--radius-lg);padding:1.5rem 2rem;
-    margin-bottom:2rem;display:flex;align-items:center;gap:1.5rem;flex-wrap:wrap;">
-    <div style="flex:1;min-width:200px;">
-      <div style="color:var(--gold);font-size:12px;font-weight:600;letter-spacing:0.08em;
-        text-transform:uppercase;margin-bottom:6px;">Baholovchi sifatida kirasizmi?</div>
-      <div style="color:#ffffff80;font-size:13px;line-height:1.5;">
-        Sizga yuborilgan <b style="color:#fff;">4 raqamli kodni</b> kiriting va baholashni boshlang
+<!-- LOGIN -->
+<div id="pgLogin" class="pg-center">
+  <div class="login-card fu">
+    <div style="text-align:center;margin-bottom:1.25rem;">
+      <div style="font-size:32px;margin-bottom:4px;">🎯</div>
+      <div class="login-title">Milliard 360°</div>
+      <div class="login-sub">Liderlik baholash platformasi</div>
+    </div>
+    <div class="tabs">
+      <button class="tab on" id="t1" onclick="switchTab(1)">Login / Parol</button>
+      <button class="tab" id="t2" onclick="switchTab(2)">4 xonali kod</button>
+    </div>
+    <div id="f1">
+      <div class="fl"><label>Login</label><input id="iLogin" placeholder="login" onkeydown="if(event.key==='Enter')doLogin()"></div>
+      <div class="fl"><label>Parol</label><input type="password" id="iPass" placeholder="••••••" onkeydown="if(event.key==='Enter')doLogin()"></div>
+      <div id="eLogin" class="err">Login yoki parol noto'g'ri</div>
+      <button class="btn btn-dark mt2" onclick="doLogin()">Kirish →</button>
+    </div>
+    <div id="f2" style="display:none;">
+      <div class="fl"><label>Baholovchi kodi</label>
+        <input id="iCode" maxlength="4" placeholder="0000"
+          style="text-align:center;font-size:32px;font-weight:700;letter-spacing:10px;font-family:monospace;padding:14px;"
+          oninput="this.value=this.value.replace(/[^0-9]/g,'');if(this.value.length===4)doCode()"
+          onkeydown="if(event.key==='Enter')doCode()">
       </div>
-    </div>
-    <div style="display:flex;gap:8px;align-items:center;">
-      <input type="text" id="quickCodeInput" maxlength="4" placeholder="0000"
-        style="width:90px;text-align:center;font-size:24px;font-weight:700;letter-spacing:8px;
-        padding:10px;border:2px solid #ffffff30;border-radius:var(--radius);
-        background:#ffffff10;color:#fff;font-family:monospace;"
-        oninput="this.value=this.value.replace(/[^0-9]/g,'');if(this.value.length===4)quickLogin()"
-        onkeydown="if(event.key==='Enter')quickLogin()">
-      <button onclick="quickLogin()" style="background:var(--gold);color:var(--ink);border:none;
-        padding:12px 20px;border-radius:var(--radius);font-size:14px;font-weight:600;cursor:pointer;">
-        Kirish →
-      </button>
-    </div>
-    <div id="quickLoginError" style="color:#ff6b6b;font-size:12px;width:100%;display:none;"></div>
-  </div>
-
-  <div class="steps-row">
-    <div class="step-box">
-      <div class="step-num">1</div>
-      <div class="step-title">Ma'lumot kiriting</div>
-      <div class="step-desc">Ism, lavozim va 15 ta baholovchi kontaktini qo'shing</div>
-    </div>
-    <div class="step-box">
-      <div class="step-num">2</div>
-      <div class="step-title">Linklar yuboriladi</div>
-      <div class="step-desc">Har bir baholovchiga anonim havola hosil qilinadi</div>
-    </div>
-    <div class="step-box">
-      <div class="step-num">3</div>
-      <div class="step-title">Ular baholaydi</div>
-      <div class="step-desc">25 savol, 5-7 daqiqa, to'liq anonim</div>
-    </div>
-    <div class="step-box">
-      <div class="step-num">4</div>
-      <div class="step-title">AI tahlil</div>
-      <div class="step-desc">Claude AI chuqur hisobot va strategik maslahat beradi</div>
+      <div id="eCode" class="err">Noto'g'ri kod. Tekshiring.</div>
+      <button class="btn btn-dark mt2" onclick="doCode()">Kirish →</button>
     </div>
   </div>
 </div>
 
-<!-- ═══════════════════════════════ SETUP ═══════════════════════════════ -->
-<div id="page-setup" class="page">
-  <div class="card fade-up">
-    <div class="card-title">Asosiy ma'lumotlar</div>
-    <div class="card-sub">Baholanuvchi shaxs haqida ma'lumot kiriting</div>
-    <div class="field-row">
-      <div>
-        <div class="field-label">Ism va familiya</div>
-        <input type="text" id="subjectName" placeholder="Masalan: Bobur Karimov">
-      </div>
-      <div>
-        <div class="field-label">Lavozim</div>
-        <input type="text" id="subjectRole" placeholder="Masalan: Bosh direktor">
-      </div>
+<!-- ADMIN -->
+<div id="pgAdmin" class="pg" style="display:none;">
+  <div class="fb" style="margin-bottom:1.5rem;">
+    <div>
+      <h1 style="font-family:'DM Serif Display',serif;font-size:26px;">Admin panel</h1>
+      <p style="font-size:13px;color:var(--ink3);">Foydalanuvchilarni boshqaring</p>
     </div>
-    <div class="field-row">
-      <div>
-        <div class="field-label">Kompaniya / soha</div>
-        <input type="text" id="subjectCompany" placeholder="Masalan: TechUz LLC">
-      </div>
-      <div>
-        <div class="field-label">Tajriba (yil)</div>
-        <select id="subjectExp">
-          <option value="1">1-3 yil</option>
-          <option value="2">3-7 yil</option>
-          <option value="3">7-15 yil</option>
-          <option value="4">15+ yil</option>
-        </select>
-      </div>
+    <button class="btn btn-gold btn-sm" onclick="toggleAddUser()">+ Yangi foydalanuvchi</button>
+  </div>
+
+  <div id="addUserCard" class="card" style="display:none;">
+    <div class="card-title">Yangi baholanuvchi</div>
+    <div class="grid2" style="margin-top:0.75rem;">
+      <div class="fl"><label>To'liq ism</label><input id="nName" placeholder="Ism Familiya"></div>
+      <div class="fl"><label>Lavozim</label><input id="nTitle" placeholder="Direktor"></div>
+      <div class="fl"><label>Kompaniya</label><input id="nCompany" placeholder="CompanyName"></div>
+      <div class="fl"><label>Login</label><input id="nLogin" placeholder="sardor2024"></div>
+      <div class="fl"><label>Parol</label><input type="password" id="nPass" placeholder="kamida 4 belgi"></div>
+    </div>
+    <div style="display:flex;gap:8px;margin-top:0.75rem;">
+      <button class="btn btn-gold btn-sm" onclick="createUser()">Yaratish</button>
+      <button class="btn btn-out btn-sm" onclick="toggleAddUser()">Bekor</button>
     </div>
   </div>
 
-  <div class="card fade-up">
-    <div class="card-title">Baholovchilar</div>
-    <div class="card-sub">Har bir guruhdan 3 kishini qo'shing. Ular anonim havola oladi.</div>
-
-    <div id="evaluatorGroups"></div>
-
-    <button class="btn-primary mt-3" onclick="generateLinks()" style="width:100%">Havolalar yaratish va ko'rish →</button>
-  </div>
+  <div class="sec-hdr mt2">Foydalanuvchilar</div>
+  <div id="userGrid" class="grid2"></div>
 </div>
 
-<!-- ═══════════════════════════════ SURVEY ═══════════════════════════════ -->
-<div id="page-survey" class="page">
-  <div id="surveySelectView">
-    <div class="card">
-      <div class="card-title">Baholash havolalari va kodlar</div>
-      <div class="card-sub">Har bir kishiga uning 4 raqamli kodini yuboring. Ular shu sahifaga kirib, kodni kiritib baholaydi.</div>
-      <table class="contacts-table" id="linksTable"></table>
-    </div>
-    <div id="shareUrlCard" class="card mt-2" style="display:none;background:var(--ink);color:#fff;border-color:var(--ink);">
-      <div style="font-size:11px;font-weight:700;letter-spacing:0.1em;color:var(--gold);margin-bottom:8px;">⚠️ MUHIM — USHBU SAHIFANI YOPMASDAN AVVAL</div>
-      <div style="font-size:13px;color:#ffffff90;margin-bottom:12px;line-height:1.6;">
-        Quyidagi <b style="color:#fff;">ADMIN URL</b>ni saqlang. Bu URL siz boshqa qurilmadan yoki keyinroq kirganda barcha ma'lumotlarni tiklaydi. Bookmark qiling!
-      </div>
-      <div style="display:flex;gap:8px;align-items:center;">
-        <input id="shareUrlText" type="text" readonly style="flex:1;font-size:11px;padding:8px 12px;border-radius:6px;border:1px solid rgba(255,255,255,0.2);background:rgba(255,255,255,0.1);color:#fff;font-family:monospace;">
-        <button onclick="copyAdminUrl()" style="background:var(--gold);color:var(--ink);border:none;padding:8px 16px;border-radius:6px;font-size:12px;font-weight:700;cursor:pointer;white-space:nowrap;" id="copyAdminBtn">Nusxa olish</button>
-      </div>
-      <div style="font-size:11px;color:#ffffff50;margin-top:8px;">Bu URL faqat siz uchun — baholovchilarga emas. Baholovchilarga faqat KOD yuboring.</div>
-    </div>
-
-    <div class="card mt-2" id="selfAssessCard">
-      <div class="card-title">O'z-o'zingizni baholang</div>
-      <div class="card-sub">Yuklanmoqda...</div>
-    </div>
-    <div class="card mt-2" style="background:var(--surface3);border-style:dashed;">
-      <div class="card-title" style="font-size:16px;">Demo rejim</div>
-      <div class="card-sub">Tizimni sinab ko'rish uchun</div>
-      <button class="btn-outline mt-2" onclick="loadDemo()" style="font-size:13px;">Demo natijani yuklash →</button>
-    </div>
+<!-- SUBJECT -->
+<div id="pgSubject" class="pg" style="display:none;">
+  <div id="subHdr" style="margin-bottom:1.25rem;"></div>
+  <div class="tabs" style="width:fit-content;margin-bottom:1.25rem;">
+    <button class="tab on" id="stab1" onclick="stab(1)">Baholovchilar</button>
+    <button class="tab" id="stab2" onclick="stab(2)">Natijalar</button>
+    <button class="tab" id="stab3" onclick="stab(3)">O'zim</button>
   </div>
-
-  <div id="surveyFormView" class="hidden">
-    <div id="surveyInviteCard" class="invite-hero">
-      <div class="avatar" id="surveyAvatar">BK</div>
-      <div class="role-badge" id="surveyRoleBadge" style="background:var(--gold);color:var(--ink);padding:4px 14px;border-radius:99px;font-size:11px;font-weight:600;display:inline-block;margin-bottom:12px;"></div>
-      <h2 id="surveyTitle">Baholash so'rovi</h2>
-      <p id="surveyDesc">Quyidagi savollarga halol va samimiy javob bering. Javoblaringiz to'liq anonim.</p>
-      <div class="anon-badge" id="anonBadge">🔒 Anonim — ismingiz ko'rinmaydi</div>
-    </div>
-
-    <div class="progress-wrap"><div class="progress-inner" id="surveyProgress" style="width:0%"></div></div>
-
-    <div id="surveyQuestions"></div>
-
-    <div class="card">
-      <div class="field-label">Eng kuchli tomoni (ixtiyoriy)</div>
-      <textarea class="comment-area" id="commentStrong" placeholder="Bu shaxsning eng kuchli fazilati nima deb o'ylaysiz?"></textarea>
-      <div class="field-label mt-2">Rivojlanish yo'nalishi (ixtiyoriy)</div>
-      <textarea class="comment-area" id="commentImprove" placeholder="Qaysi sohada yaxshilanish kerak?"></textarea>
-    </div>
-
-    <button class="btn-primary" style="width:100%;padding:16px;" onclick="submitSurvey()" id="submitSurveyBtn" disabled>Bahoni yuborish →</button>
-  </div>
+  <div id="stab-1"></div>
+  <div id="stab-2" style="display:none;"></div>
+  <div id="stab-3" style="display:none;"></div>
 </div>
 
-<!-- ═══════════════════════════════ RESULTS ═══════════════════════════════ -->
-<div id="page-results" class="page">
-  <div id="resultsContent" class="hidden">
-    <div class="results-hero fade-up">
-      <div class="chip"><div class="chip-dot"></div><span id="respCount">0 ta baholash</span></div>
-      <div class="score-overall" id="overallScore">—</div>
-      <div class="score-label">umumiy ball (5 dan)</div>
-      <h2 id="resultsName" style="margin-top:1rem;">Liderlik profili</h2>
-      <p id="resultsRole" style="opacity:0.5;font-size:13px;"></p>
-    </div>
-
-    <canvas id="radarCanvas" width="400" height="300"></canvas>
-
-    <div class="metrics-grid mt-3" id="metricsGrid"></div>
-
-    <div class="reviewer-breakdown">
-      <div class="rb-title">Guruh bo'yicha natijalar</div>
-      <div id="rbRows"></div>
-    </div>
-
-    <div class="strengths-weak" id="swCards"></div>
-
-    <div class="ai-section">
-      <div class="ai-label">Claude AI — Chuqur tahlil</div>
-      <div class="ai-content" id="aiAnalysis">
-        <div class="ai-loading" id="aiLoading">
-          <div class="ai-dots"><span></span><span></span><span></span></div>
-          <span style="font-size:13px;color:var(--ink3);">AI tahlil qilinmoqda...</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="card">
-      <div class="card-title">Strategik harakatlar rejasi</div>
-      <div id="actionSteps"></div>
-    </div>
-
-    <div class="text-center mt-3" style="padding-bottom:3rem;">
-      <button class="btn-primary" onclick="window.print()">PDF yuklab olish</button>
-      <button class="btn-outline" onclick="goPage('setup')">Yangi baholash</button>
-    </div>
+<!-- SURVEY -->
+<div id="pgSurvey" class="pg" style="display:none;">
+  <div class="sv-hero">
+    <div class="sv-badge" id="svBadge"></div>
+    <h2 id="svTitle"></h2>
+    <p id="svDesc"></p>
+    <div class="anon" id="svAnon">🔒 Anonim — ismingiz ko'rinmaydi</div>
   </div>
-
-  <div id="resultsEmpty" class="card text-center" style="padding:3rem;">
-    <div style="font-size:48px;margin-bottom:1rem;">📊</div>
-    <div class="card-title">Hali natija yo'q</div>
-    <div class="card-sub mt-1">Baholash anketalarini to'ldiring, keyin natijalar shu yerda paydo bo'ladi</div>
-    <button class="btn-primary mt-3" onclick="loadDemo()">Demo natijani yuklash</button>
+  <div class="prog-wrap"><div class="prog" id="svProg" style="width:0%"></div></div>
+  <div id="svQs"></div>
+  <div class="card">
+    <div class="fl"><label>Eng kuchli tomoni (ixtiyoriy)</label>
+      <textarea class="comment" id="cmtS" placeholder="Bu shaxsning eng kuchli fazilati..."></textarea></div>
+    <div class="fl mt1"><label>Rivojlanish yo'nalishi (ixtiyoriy)</label>
+      <textarea class="comment" id="cmtI" placeholder="Qaysi sohada yaxshilanish kerak..."></textarea></div>
   </div>
+  <button class="btn btn-dark" id="svSubmit" disabled onclick="submitSurvey()" style="padding:14px;">Bahoni yuborish →</button>
 </div>
 
-
-<!-- LOGIN OVERLAY -->
-<div id="loginOverlay" class="hidden" style="position:fixed;inset:0;background:rgba(15,14,12,0.85);
-  z-index:200;display:flex;align-items:center;justify-content:center;backdrop-filter:blur(4px);">
-  <div style="background:var(--surface);border-radius:var(--radius-lg);padding:2.5rem;
-    width:100%;max-width:380px;margin:1rem;">
-    <div style="text-align:center;margin-bottom:2rem;">
-      <div style="font-size:40px;margin-bottom:12px;">🔐</div>
-      <h2 style="font-family:'DM Serif Display',serif;font-size:22px;color:var(--ink);margin-bottom:6px;">
-        Kirish kodi
-      </h2>
-      <p style="font-size:13px;color:var(--ink3);line-height:1.5;">
-        Sizga yuborilgan 4 raqamli kodni kiriting
-      </p>
-    </div>
-    <input type="text" id="loginCodeInput" maxlength="4" placeholder="0000"
-      style="text-align:center;font-size:36px;font-weight:700;letter-spacing:12px;
-      padding:16px;border:2px solid var(--border);border-radius:var(--radius);
-      width:100%;margin-bottom:8px;font-family:monospace;"
-      oninput="this.value=this.value.replace(/[^0-9]/g,'')"
-      onfocus="document.getElementById('loginError').style.display='none'">
-    <div id="loginError" style="color:var(--red);font-size:13px;margin-bottom:12px;display:none;text-align:center;"></div>
-    <button class="btn-primary" style="width:100%;padding:14px;font-size:15px;" onclick="attemptLogin()">
-      Kirish →
-    </button>
-    <button onclick="hideLoginPage()" 
-      style="width:100%;padding:10px;margin-top:8px;border:none;background:transparent;
-      color:var(--ink3);font-size:13px;cursor:pointer;">
-      Yopish
-    </button>
-    <div style="margin-top:1.5rem;padding-top:1rem;border-top:1px solid var(--border);text-align:center;">
-      <button class="btn-outline" onclick="hideLoginPage();goPage('survey')" style="font-size:12px;padding:6px 16px;">
-        Kod yo'qmi? Baholash sahifasiga o'tish
-      </button>
-    </div>
-  </div>
+<!-- DONE -->
+<div id="pgDone" class="pg" style="display:none;text-align:center;padding-top:4rem;">
+  <div style="font-size:52px;margin-bottom:1rem;">✅</div>
+  <h2 style="font-family:'DM Serif Display',serif;font-size:26px;margin-bottom:8px;">Rahmat!</h2>
+  <p style="font-size:14px;color:var(--ink3);max-width:320px;margin:0 auto;line-height:1.7;">Baholashingiz muvaffaqiyatli qabul qilindi va anonim saqlandi.</p>
 </div>
 
 <script>
-// ══════════════════════════════════════════════
-//  360° MILLIARD — CCL Benchmarks® asosida
-//  Har guruh uchun alohida savollar (v4)
-//  CCL: 16 kompetensiya + 5 derailment omili
-//  Yale SOM + Harvard leadership metodologiyasi
-// ══════════════════════════════════════════════
+// ═══════════════════════════════════════
+// DATA — localStorage ga saqlanadi
+// ═══════════════════════════════════════
+const DB_KEY = 'milliard360';
+
+function db() {
+  try { return JSON.parse(localStorage.getItem(DB_KEY)) || initDB(); }
+  catch(e) { return initDB(); }
+}
+
+function save(data) {
+  localStorage.setItem(DB_KEY, JSON.stringify(data));
+}
+
+function initDB() {
+  const data = {
+    users: [
+      { id: 'admin', login: 'admin', pass: 'milliard2024', role: 'admin', name: 'Administrator' }
+    ],
+    sessions: {},   // userId -> { evaluators:[], responses:[] }
+  };
+  save(data);
+  return data;
+}
+
+// ═══════════════════════════════════════
+// QUESTIONS
+// ═══════════════════════════════════════
+const GQ = {
+  xodim:[
+    {cat:"Yo'nalish va rivojlantirish",qs:["U menga aniq maqsad va vazifalar belgilab beradi","Mening kasbiy o'sishim uchun vaqt ajratadi","Ish natijalarim bo'yicha foydali fikr-mulohaza beradi","Xatolarimdan o'rganishimga imkon beradi","Imkoniyatlarimdan foydalanib vakolat beradi"]},
+    {cat:"Psixologik muhit",qs:["U bilan qiyin mavzularni ochiq gaplashish mumkin","Jamoada xavfsiz va hurmatli muhit yaratadi","Xodimlar o'rtasidagi nizolarni adolatli hal qiladi","Har bir xodimning fikrini tinglab e'tiborga oladi","Yutuqlarimizni tan oladi va nishonlaydi"]},
+    {cat:"Liderlik uslubi",qs:["Qiyin vaziyatlarda xotirjam va yo'naltiruvchi bo'ladi","O'zi nima desa shuni qiladi — so'z va ish birligi bor","Jamoa muvaffaqiyatini o'z muvaffaqiyatidan ustun qo'yadi","O'zgarishlarga moslashadi va jamoani moslashishga yordam beradi","Adolatli — hamma uchun bir xil standart qo'llaydi"]},
+    {cat:"Kommunikatsiya",qs:["Muhim ma'lumotlarni o'z vaqtida aniq yetkazadi","Meni diqqat bilan tinglab savollarimga javob beradi","Tanqidni konstruktiv va hurmatli tarzda ifodalaydi","Fikrim va takliflarimni hisobga oladi","Muhim qarorlar haqida izoh beradi"]},
+    {cat:"Natija",qs:["Qo'ygan muddatlar va resurslarga rioya qiladi","Yuqori sifat standartlarini qo'yadi","To'siqlarni olib tashlash uchun faol harakat qiladi","Ustuvorliklarni to'g'ri belgilaydi","Jamoaning mehnatini natijaga ulaydi"]},
+  ],
+  do_st:[
+    {cat:"Hissiy intellekt",qs:["Stress va bosim ostida o'zini boshqara oladi","Qiyin vaziyatlarda ham optimistik qoladi","Boshqalarning his-tuyg'ularini sezadi va empati ko'rsatadi","O'z kuchli va zaif tomonlarini ob'ektiv baholaydi","Tanqidni salbiy reaktsiyasiz qabul qiladi"]},
+    {cat:"Munosabatlar",qs:["Munosabatlarda halol va samimiy bo'ladi","O'z so'zida turadi, va'dasiga vafodor","Boshqalarning ehtiyojini o'z ehtiyojidan ko'ra muhim deb biladi","Ziddiyat vaqtida avval tinglaydi, keyin gapiradi","Munosabatlardagi xatolarini tan oladi"]},
+    {cat:"Shaxsiy o'sish",qs:["Yangi bilim va tajriba olishga doimo intiladi","O'z qarashlari va dunyoqarashini rivojlantirib boradi","Muvaffaqiyatsizlikdan saboq chiqaradi","Maqsadlarida qat'iy va izchil","Hamisha fikr yuritib ongli qarorlar qabul qiladi"]},
+    {cat:"Ijtimoiy ta'sir",qs:["Atrofidagilarga ilhom beradi va motivatsiya uyg'otadi","Guruhga energiya va ijobiylik olib kiradi","O'zgalar muammosida yordam berishga tayyor","Boshqalarni manipulyatsiya qilmasdan halol ta'sir qiladi","Muhim paytlarda ishonchli va qo'llab-quvvatlovchi"]},
+    {cat:"Hayot muvozanati",qs:["Ish va shaxsiy hayot o'rtasida muvozanatni saqlaydi","O'z sog'lig'i va dam olishiga e'tibor beradi","Yaqinlari bilan sifatli vaqt o'tkazadi","Faqat ish bilan yashamaydi — qiziqishlari bor","Uzoq muddatda barqaror — tezda kuyib ketmaydi"]},
+  ],
+  rahbar:[
+    {cat:"Strategik fikrlash",qs:["Keng miqyosda va uzoq muddatli fikrlay oladi","Biznes muhitidagi o'zgarishlarni oldindan ko'ra oladi","O'z bo'limining maqsadlarini umumiy strategiyaga ulaydi","Resurslarni strategik jihatdan to'g'ri taqsimlaydi","Raqobatchilar va bozor tendensiyalarini kuzatadi"]},
+    {cat:"Qarorlar qabul qilish",qs:["Noaniqlik sharoitida ham qarorlarni qat'iy qabul qiladi","Ma'lumotlar asosida qaror qabul qiladi","Muhim qarorlar qabul qilishdan oldin to'g'ri savollarni beradi","Xato qarorini tezda tan oladi va o'zgartiradi","Yuqori xavfli vaziyatlarda puxta fikr yuritadi"]},
+    {cat:"Tashkiliy liderlik",qs:["Tashkilot madaniyatini ijobiy shakllantirishga hissa qo'shadi","Iste'dodli xodimlarni jalb qiladi va ushlab qoladi","O'z bo'limida yuqori samaradorlik madaniyatini o'rnatadi","O'zgarishlarga qarshilikni boshqara oladi","Tashkiliy manfaatni shaxsiy manfaatdan ustun qo'yadi"]},
+    {cat:"Natija va javobgarlik",qs:["Qo'yilgan natijalarga erishadi yoki sabab tushuntiradi","Vazifalarni bajarilishini nazorat qiladi","Muammolarni kichik bo'lganida hal qiladi","O'z sohasida mas'uliyatni to'liq o'z zimmasiga oladi","Tashkilotga qo'shadigan qiymatini aniq ko'rsata oladi"]},
+    {cat:"Yetakchilik",qs:["O'zi istagan xulq-atvorni avvalo o'zida namoyish etadi","Etik me'yorlarga doimo rioya qiladi","Qiyin paytlarda ham tashkilotning qadriyatlariga sodiq","Xodimlar kamoloti uchun vaqt va resurs sarflaydi","Doimiy rivojlanishga intiladi"]},
+  ],
+  hamkor:[
+    {cat:"Ishonch",qs:["O'z majburiyatlarini bajaradi — unga tayanish mumkin","Kredit va muvaffaqiyatni adolatli taqsimlaydi","Maxfiy ma'lumotlarni asrashga ishonch bo'ladi","Qiyin paytlarda ham sheriklik munosabatini saqlaydi","Uzoq muddatli munosabatni qisqa muddatli manfaatdan ustun qo'yadi"]},
+    {cat:"Muloqot",qs:["Nizoli masalalarda ikki tomon uchun yechim qidiradi","O'z manfaatini aniq ifodalaydi, boshqalarnikini tinglab","Muloqotda manipulyatsiya yoki bosim ishlatmaydi","Kelishmovchilikni munosabatni buzmay hal qiladi","Murakkab muzokaralarda konstruktiv bo'ladi"]},
+    {cat:"Professional ta'sir",qs:["Sohasida bilim va tajriba darajasi yuqori","Yangi g'oyalar va yondashuv bilan hissa qo'shadi","Boshqalarga o'z tajribasini o'rganishga ochiq","Umumiy loyihalarda ishtiyoq bilan qatnashadi","Professional muloqotda aniq va samarali"]},
+    {cat:"Moslashuvchanlik",qs:["O'zgargan sharoit va talablarga tez moslashadi","Turli shaxsiyat va ish uslubidagi odamlar bilan ishlaydi","Dastlabki rejasi o'zgarganda ham samarali ishlaydi","Noaniqlik va vaziyatlarda sakin qoladi","Turli madaniyat va qadriyatlar bilan hurmat bilan ishlaydi"]},
+    {cat:"Axloq",qs:["Biznes munosabatlarida shaffof va halol bo'ladi","Manfaatlar to'qnashuvini ochiq e'lon qiladi","Kelishuvlarga amal qiladi, hatto noqulay bo'lsa ham","Boshqalarning manfaatlarini himoya qilishga tayyor","Axloqiy chegarani buzishga rozi bo'lmaydi"]},
+  ],
+  mijoz:[
+    {cat:"Mijozga yo'nalganlik",qs:["Mening ehtiyojlarimni tushunishga haqiqiy qiziqish bildiradi","Hal qilishim kerak bo'lgan muammoni to'g'ri aniqlaydi","Mendan kutilmagan qo'shimcha qiymat yaratadi","Uzoq muddatli munosabatni qisqa muddatli foydadan ustun qo'yadi","Mening muvaffaqiyatim uning muvaffaqiyati — bu seziladi"]},
+    {cat:"Ishonchlilik",qs:["Va'da qilgan narsasini va'da qilgan muddatda bajaradi","Muammo yuzaga kelganda tezda xabar beradi va yechim taklif qiladi","Professional bilim darajasi yuqori","Yangiliklar haqida proaktiv xabar beradi","Xato qilganda ochiq tan oladi va tuzatadi"]},
+    {cat:"Muloqot",qs:["Murakkab narsalarni oddiy tushuntiradi","Mening savollarimga tez va to'liq javob beradi","Muloqotda samimiy va ochiq","Mening vaqtimni qadrlaydi","Muammoni eshitib to'g'ri savol beradi, keyin taklif qiladi"]},
+    {cat:"Qiymat",qs:["Kutganmdan ko'proq qiymat yaratadi","Yangi g'oya va yechimlar taklif qiladi, men so'ramasdan","Bozorlardagi yangiliklar haqida ma'lumot beradi","Biznesimni yaxshilashga konstruktiv taklif qiladi","U bilan ishlash mening kompaniyamni rivojlantiradi"]},
+    {cat:"Sheriklik",qs:["U sherik, nafaqat yetkazib beruvchi deb his qilaman","Qiyin paytlarda ham qo'llab-quvvatlaydi","Biznesimning rivojiga chin yurakdan qiziqadi","Unga tavsiya beraman — do'stlarimga maslahatlashaman","Kelgusida ham u bilan ishlashni davom ettirmoqchiman"]},
+  ],
+};
+
+const SQ = [
+  {cat:"Liderlik samaradorligi",qs:["Ko'zlagan maqsadlarimga odatda erisha olaman","Qiyin qarorlarni qat'iy va o'z vaqtida qabul qilaman","O'z xatolarimni tezda tan olib, yo'nalishni o'zgartiraman","Atrofimdagi odamlarga ilhom va motivatsiya bera olaman","Tashkiliy o'zgarishlarga jamoamni muvaffaqiyatli olib o'taman"]},
+  {cat:"Munosabatlar",qs:["Turli odamlar bilan samarali munosabat o'rnata olaman","Boshqalarni tinglashga haqiqiy ishtiyoq ko'rsataman","Konfliktlarni har ikki tomon uchun adolatli hal qilaman","Boshqalarga ta'sir o'tkazaman, lekin manipulyatsiyasiz","Ishonch qozonish va saqlash mening kuchli tomonim"]},
+  {cat:"O'z-o'zini anglash",qs:["O'zim haqimda atrofdagilar qanday fikrda ekanini bilaman","Kuchli tomonlarimni ob'ektiv baholay olaman","Zaif tomonlarimni bilaman va ularga ish tutaman","His-tuyg'ularim qarorlarimga ta'sirini kuzata olaman","Bosim ostida o'zimni noto'g'ri baholamayman"]},
+  {cat:"Strategik fikrlash",qs:["Kelajakni va uzoq muddatli tendensiyalarni oldindan ko'raman","Murakkab vaziyatlarni tizimli va mantiqiy tahlil qilaman","Muhim va shoshilinch vazifalarni farqlab ustuvorlik beraman","Noaniqlik sharoitida ham yo'nalish aniq bo'ladi","Strategik fikr yuritib, taktik harakatlarni rejalashtiraman"]},
+  {cat:"Shaxsiy rivojlanish",qs:["Doimiy o'rganish va rivojlanishga vaqt ajrataman","Tanqid va fikr-mulohazalarni rivojlanish uchun foydalanaman","Muvaffaqiyatsizlikdan saboq olib, oldinga intilaman","O'zimni nafaqat professional, balki shaxs sifatida rivojlantiraman","Yosh liderlarni rivojlantirishga faol hissa qo'shaman"]},
+];
 
 const GROUPS = [
-  { id:'xodim',  label:'Xodimlar (qo\'llangilar)', icon:'👤', color:'#1a4a8a', bg:'#e8f0fc',
-    desc:'Rahbar bevosita boshqaradigan xodimlar' },
-  { id:'do_st',  label:'Shaxsiy tanishlari',       icon:'🤝', color:'#1a7a4a', bg:'#e8f5ee',
-    desc:'Do\'stlar, tanishlar, yaqinlar' },
-  { id:'rahbar', label:'Rahbarlari (yuqori)',       icon:'🏢', color:'#7a3a1a', bg:'#f5ede8',
-    desc:'Ustidan turuvchi rahbarlar' },
-  { id:'hamkor', label:'Hamkorlar (tengdoshlar)',   icon:'💼', color:'#5a1a7a', bg:'#f0e8f5',
-    desc:'Bir darajadagi sheriklar, hamkasblar' },
-  { id:'mijoz',  label:'Mijozlar / manfaatdorlar', icon:'🌟', color:'#7a6a1a', bg:'#f5f0e8',
-    desc:'Tashqi mijozlar, hamkorlar, manfaatdorlar' },
+  {id:'xodim',label:"Xodimlar",icon:'👤',color:'#1a4a8a',bg:'#e8f0fc'},
+  {id:'do_st',label:"Do'stlar",icon:'🤝',color:'#1a7a4a',bg:'#e8f5ee'},
+  {id:'rahbar',label:'Rahbarlar',icon:'🏢',color:'#7a3a1a',bg:'#f5ede8'},
+  {id:'hamkor',label:'Hamkorlar',icon:'💼',color:'#5a1a7a',bg:'#f0e8f5'},
+  {id:'mijoz',label:'Mijozlar',icon:'🌟',color:'#7a6a1a',bg:'#f5f0e8'},
 ];
 
-// ══════════════════════════════════════════════
-// CCL Benchmarks® + Yale + Harvard asosida
-// HAR GURUH UCHUN ALOHIDA SAVOLLAR
-// 5 kompetensiya × 5 savol = 25 savol/guruh
-// Har guruh o'z nuqtai nazaridan baholaydi
-// ══════════════════════════════════════════════
+// ═══════════════════════════════════════
+// STATE
+// ═══════════════════════════════════════
+let CU = null; // current user
+let CE = null; // current evaluator (baholovchi)
+let surveyRole = '';
+let surveyRatings = {};
 
-const GROUP_QUESTIONS = {
-
-  // ── XODIMLAR: qo'l ostidagilar nuqtai nazari ──
-  // CCL "Leading Others" + "Managing Effectively" bloklari
-  xodim: [
-    { cat:'Yo\'nalish va rivojlantirish', qs:[
-      'U menga aniq maqsad va vazifalar belgilab beradi',
-      'Mening kasbiy o\'sishim uchun vaqt ajratadi va qo\'llab-quvvatlaydi',
-      'Ish natijalarim bo\'yicha foydali fikr-mulohaza beradi',
-      'Xatolarimdan o\'rganishimga imkon beradi, jazolamaydi',
-      'Imkoniyatlarimdan foydalanib vakolat beradi, mikromenejmentsiz',
-    ]},
-    { cat:'Psixologik muhit', qs:[
-      'U bilan qiyin mavzularni ochiq gaplashish mumkin',
-      'Jamoada xavfsiz va hurmatli muhit yaratadi',
-      'Xodimlar o\'rtasidagi nizolarni adolatli hal qiladi',
-      'Har bir xodimning fikrini tinglab, e\'tiborga oladi',
-      'Yutuqlarimizni tan oladi va nishonlaydi',
-    ]},
-    { cat:'Liderlik uslubi', qs:[
-      'Qiyin vaziyatlarda xotirjam va yo\'naltiruvchi bo\'ladi',
-      'O\'zi nima desa, shuni qiladi — so\'z va ish birligi bor',
-      'Jamoa muvaffaqiyatini o\'z muvaffaqiyatidan ustun qo\'yadi',
-      'O\'zgarishlarga moslashadi va jamoani moslashishga yordam beradi',
-      'Adolatli — hamma uchun bir xil standart qo\'llaydi',
-    ]},
-    { cat:'Kommunikatsiya', qs:[
-      'Muhim ma\'lumotlarni o\'z vaqtida va aniq yetkazadi',
-      'Meni diqqat bilan tinglab, savollarimga javob beradi',
-      'Tanqidni konstruktiv va hurmatli tarzda ifodalaydi',
-      'Fikrim va takliflarimni hisobga oladi',
-      'Muhim qarorlar haqida izoh beradi va tushuntiradi',
-    ]},
-    { cat:'Natija va samaradorlik', qs:[
-      'Qo\'ygan muddatlar va resurslarga rioya qiladi',
-      'Yuqori sifat standartlarini qo\'yadi va ushlab turadi',
-      'To\'siqlarni olib tashlash uchun faol harakat qiladi',
-      'Ustuvorliklarni to\'g\'ri belgilaydi va tartibga soladi',
-      'Jamoaning mehnatini natijaga ulaydi',
-    ]},
-  ],
-
-  // ── DO'STLAR / YAQINLAR: shaxsiy nuqtai nazar ──
-  // Daniel Goleman EI + CCL "Personal and Interpersonal" bloki
-  do_st: [
-    { cat:'Hissiy intellekt', qs:[
-      'Stress va bosim ostida o\'zini boshqara oladi',
-      'Qiyin vaziyatlarda ham optimistik va barqaror qoladi',
-      'Boshqalarning his-tuyg\'ularini sezadi va empati ko\'rsatadi',
-      'O\'z kuchli va zaif tomonlarini obektiv baholaydi',
-      'Yomon yangilik yoki tanqidni salbiy reaktsiyasiz qabul qiladi',
-    ]},
-    { cat:'Munosabatlar sifati', qs:[
-      'Munosabatlarda halol va samimiy bo\'ladi',
-      'O\'z so\'zida turadi, va\'dasiga vafodor',
-      'Boshqalarning ehtiyojini o\'z ehtiyojidan ko\'ra muhim deb biladi',
-      'Ziddiyat vaqtida tinglaydi, keyin gapiradi',
-      'Munosabatlardagi xatolarini tan oladi va kechirim so\'raydi',
-    ]},
-    { cat:'Shaxsiy o\'sish', qs:[
-      'Yangi bilim va tajriba olishga doimo intiladi',
-      'O\'z qarashlari va dunyoqarashini rivojlantirib boradi',
-      'Muvaffaqiyatsizlikdan saboq chiqaradi, qattiqroq harakat qiladi',
-      'Maqsadlarida qat\'iy va izchil — oson yo\'lga og\'ib ketmaydi',
-      'Hamisha fikr yuritib, ongli qarorlar qabul qiladi',
-    ]},
-    { cat:'Ijtimoiy ta\'sir', qs:[
-      'Atrofidagilarga ilhom beradi va motivatsiya uyg\'otadi',
-      'Guruh va jamoaga energiya va ijobiylik olib kiradi',
-      'O\'zgalar muammosida yordam berishga tayyor turadi',
-      'Boshqalarni manipulyatsiya qilmasdan, halol ta\'sir qiladi',
-      'Muhim paytlarda ishonchli va qo\'llab-quvvatlovchi bo\'ladi',
-    ]},
-    { cat:'Hayot muvozanati', qs:[
-      'Ish va shaxsiy hayot o\'rtasida muvozanatni saqlaydi',
-      'O\'z sog\'lig\'i va dam olishiga e\'tibor beradi',
-      'Yaqinlari bilan sifatli vaqt o\'tkazadi',
-      'Qiziqish va sevimlilari bor, faqat ish bilan yashamaydi',
-      'Uzoq muddatda barqaror — tezda "kuyib ketmaydi"',
-    ]},
-  ],
-
-  // ── RAHBARLAR: yuqoridan pastga nazar ──
-  // CCL "Leading the Organization" + Harvard Strategic Leadership
-  rahbar: [
-    { cat:'Strategik fikrlash', qs:[
-      'Keng miqyosda va uzoq muddatli fikrlay oladi',
-      'Biznes muhitidagi o\'zgarishlarni oldindan ko\'ra oladi',
-      'O\'z bo\'limining maqsadlarini umumiy strategiyaga ulaydi',
-      'Resurslarni strategik jihatdan to\'g\'ri taqsimlaydi',
-      'Raqobatchilar va bozor tendensiyalarini kuzatadi',
-    ]},
-    { cat:'Qarorlar qabul qilish', qs:[
-      'Noaniqlik sharoitida ham qarorlarni qat\'iy qabul qiladi',
-      'Ma\'lumotlar asosida qaror qabul qiladi, his-tuyg\'u asosida emas',
-      'Muhim qarorlar qabul qilishdan oldin to\'g\'ri savollarni beradi',
-      'Xato qarorini tezda tan oladi va yo\'nalishni o\'zgartiradi',
-      'Yuqori xavfli vaziyatlarda mo\'tadil va puxta fikr yuritadi',
-    ]},
-    { cat:'Tashkiliy liderlik', qs:[
-      'Tashkilot madaniyatini ijobiy shakllantirishga hissa qo\'shadi',
-      'Iste\'dodli xodimlarni jalb qiladi va ushlab qoladi',
-      'O\'z bo\'limida yuqori samaradorlik madaniyatini o\'rnatadi',
-      'O\'zgarishlarga qarshilikni boshqara oladi',
-      'Tashkiliy manfaatni shaxsiy manfaatdan ustun qo\'yadi',
-    ]},
-    { cat:'Natija va javobgarlik', qs:[
-      'Qo\'yilgan natijalarga erishadi yoki sabab tushuntiradi',
-      'Vazifalarni bajarilishini nazorat qiladi, lekin mikromenejmentsiz',
-      'Muammolarni kichik bo\'lganida hal qiladi, katta bo\'lguncha kutmaydi',
-      'O\'z sohasida mas\'uliyatni to\'liq o\'z zimmasiga oladi',
-      'Tashkilotga qo\'shadigan qiymatini aniq ko\'rsata oladi',
-    ]},
-    { cat:'Yetakchilik va o\'rnak', qs:[
-      'O\'zi istagan xulq-atvorni avvalo o\'zida namoyish etadi',
-      'Etik me\'yorlarga doimo rioya qiladi, bosim ostida ham',
-      'Qiyin paytlarda ham tashkilotning qadriyatlariga sodiq qoladi',
-      'Xodimlar kamoloti uchun vaqt va resurs sarflaydi',
-      'Yetakchi sifatida doimiy rivojlanishga intiladi',
-    ]},
-  ],
-
-  // ── HAMKORLAR: tengdoshlar nuqtai nazari ──
-  // CCL "Interpersonal" + Harvard Negotiation Project
-  hamkor: [
-    { cat:'Hamkorlikdagi ishonch', qs:[
-      'O\'z majburiyatlarini bajaradi — unga tayanish mumkin',
-      'Kredit va muvaffaqiyatni adolatli taqsimlaydi',
-      'Sir va maxfiy ma\'lumotlarni asrashga ishonch bo\'ladi',
-      'Qiyin paytlarda ham sheriklik munosabatini saqlaydi',
-      'Uzoq muddatli munosabatni qisqa muddatli manfaatdan ustun qo\'yadi',
-    ]},
-    { cat:'Muloqot va muzokaralar', qs:[
-      'Nizoli masalalarda "g\'olib-g\'olib" yechim qidiradi',
-      'O\'z manfaatini aniq ifodalaydi, boshqalarnikini ham tinglab',
-      'Muloqotda manipulyatsiya yoki bosim ishlatmaydi',
-      'Kelishmovchilikni munosabatni buzmay hal qiladi',
-      'Murakkab muzokaralarda samarali va konstruktiv bo\'ladi',
-    ]},
-    { cat:'Professional ta\'sir', qs:[
-      'Sohasida bilim va tajriba darajasi yuqori',
-      'Yangi g\'oyalar va yondashuv bilan hissa qo\'shadi',
-      'Boshqalarga o\'z tajribasini o\'rganishga ochiq',
-      'Umumiy loyihalarda ishtiyoq va mas\'uliyat bilan qatnashadi',
-      'Professional muloqotda aniq, ixcham va samarali',
-    ]},
-    { cat:'Moslashuvchanlik', qs:[
-      'O\'zgargan sharoit va talablarga tez moslashadi',
-      'Turli shaxsiyat va ish uslubidagi odamlar bilan ishlaydi',
-      'Dastlabki rejasi o\'zgarganda ham samarali ishlaydi',
-      'Noaniqlik va noaniq vaziyatlarda sakin va konstruktiv qoladi',
-      'Turli madaniyat va qadriyatlar bilan hurmat bilan ishlaydi',
-    ]},
-    { cat:'Axloq va halollik', qs:[
-      'Biznes munosabatlarida shaffof va halol bo\'ladi',
-      'Manfaatlar to\'qnashuvini ochiq e\'lon qiladi',
-      'Kelishuvlarga amal qiladi, hatto noqulay bo\'lsa ham',
-      'Boshqalarning manfaatlarini himoya qilishga tayyor',
-      'Axloqiy chegarani buzishga hech qachon rozi bo\'lmaydi',
-    ]},
-  ],
-
-  // ── MIJOZLAR: tashqi nuqtai nazar ──
-  // Harvard Business School Customer-Centric Leadership
-  mijoz: [
-    { cat:'Mijozga yo\'nalganlik', qs:[
-      'Mening ehtiyojlarimni tushunishga haqiqiy qiziqish bildiradi',
-      'Hal qilishim kerak bo\'lgan muammoni to\'g\'ri aniqlaydi',
-      'Mendan kutilmagan qo\'shimcha qiymat yaratadi',
-      'Uzoq muddatli munosabatni qisqa muddatli foydadan ustun qo\'yadi',
-      'Mening muvaffaqiyatim uning muvaffaqiyati — bu seziladi',
-    ]},
-    { cat:'Ishonchlilik va professional', qs:[
-      'Va\'da qilgan narsasini va\'da qilgan muddatda bajaradi',
-      'Muammo yuzaga kelganda tezda xabar beradi va yechim taklif qiladi',
-      'Professional bilim darajasi yuqori — unga ishonarman',
-      'Yangilik va o\'zgarishlar haqida proaktiv xabar beradi',
-      'Xato qilganda ochiq tan oladi va tuzatadi',
-    ]},
-    { cat:'Muloqot sifati', qs:[
-      'Murakkab narsalarni oddiy va tushunarli tushuntiradi',
-      'Mening savollarimga tez va to\'liq javob beradi',
-      'Muloqotda samimiy va ochiq — yashirin narsa sezilmaydi',
-      'Mening vaqtimni qadrlaydi — keraksiz muloqotni kamaytiradi',
-      'Muammoni eshitib, to\'g\'ri savol beradi, keyin taklif qiladi',
-    ]},
-    { cat:'Qiymat va innovatsiya', qs:[
-      'Kutganmdan ko\'proq qiymat yaratadi',
-      'Yangi g\'oya va yechimlar taklif qiladi, men so\'ramasdan',
-      'Bozorlardagi yangiliklar haqida ma\'lumot beradi',
-      'Biznesimni yaxshilashga konstruktiv taklif qiladi',
-      'U bilan ishlash mening kompaniyamni rivojlantiradi',
-    ]},
-    { cat:'Munosabat va sherикlik', qs:[
-      'U sherik, nafaqat yetkazib beruvchi deb his qilaman',
-      'Qiyin paytlarda ham qo\'llab-quvvatlaydi, yo\'qolib ketmaydi',
-      'Biznesimning rivojiga chin yurakdan qiziqadi',
-      'Unga tavsiya beraman — do\'stlarimga maslahatlashaman',
-      'Kelgusida ham u bilan ishlashni davom ettirmoqchiman',
-    ]},
-  ],
-
-};
-
-// O'z-o'zini baholash uchun savollar (CCL Self-Insight + Yale)
-const SELF_QUESTIONS = [
-  { cat:'Liderlik samaradorligi', qs:[
-    'Men ko\'zlagan maqsadlarimga odatda erisha olaman',
-    'Qiyin qarorlarni qat\'iy va o\'z vaqtida qabul qilaman',
-    'O\'z xatolarimni tezda tan olib, yo\'nalishni o\'zgartiraman',
-    'Atrofimdagi odamlarga ilhom va motivatsiya bera olaman',
-    'Tashkiliy o\'zgarishlarga jamoamni muvaffaqiyatli olib o\'taman',
-  ]},
-  { cat:'Munosabatlar va ta\'sir', qs:[
-    'Turli xil odamlar bilan samarali munosabat o\'rnata olaman',
-    'Boshqalarni tinglashga haqiqiy ishtiyoq ko\'rsataman',
-    'Konfliktlarni har ikki tomon uchun adolatli hal qilaman',
-    'Boshqalarga ta\'sir o\'tkazaman, lekin manipulyatsiyasiz',
-    'Ishonch qozonish va saqlash mening kuchli tomonim',
-  ]},
-  { cat:'O\'z-o\'zini anglash (Self-Awareness)', qs:[
-    'O\'zim haqimda atrofdagilar qanday fikrda ekanini bilaman',
-    'Kuchli tomonlarimni ob\'ektiv baholay olaman',
-    'Zaif tomonlarimni bilaman va ularga ish tutaman',
-    'His-tuyg\'ularim qarorlarimga ta\'sirini kuzata olaman',
-    'Bosim ostida o\'zim haqida noto\'g\'ri baholash qilmayman',
-  ]},
-  { cat:'Strategik fikrlash', qs:[
-    'Kelajakni va uzoq muddatli tendensiyalarni oldindan ko\'raman',
-    'Murakkab vaziyatlarni tizimli va mantiqiy tahlil qilaman',
-    'Muhim va shoshilinch vazifalarni farqlab, ustuvorlik beraman',
-    'Noaniqlik sharoitida ham yo\'nalish va maqsad aniq bo\'ladi',
-    'Strategik fikr yuritib, taktik harakatlarni rejalashtiraman',
-  ]},
-  { cat:'Shaxsiy rivojlanish', qs:[
-    'Doimiy o\'rganish va rivojlanishga vaqt ajrataman',
-    'Tanqid va fikr-mulohazalarni rivojlanish uchun foydalanaman',
-    'Muvaffaqiyatsizlikdan saboq olib, oldinga intilaman',
-    'O\'zimni nafaqat professional, balki shaxs sifatida rivojlantiraman',
-    'Yosh liderlarni rivojlantirishga faol hissa qo\'shaman',
-  ]},
-];
-
-// ── APP STATE ──
-let appState = {
-  subject: {},
-  evaluators: {},
-  responses: [],
-  selfDone: false,
-  loginCodes: {},
-  generated: false,
-  currentSurveyRole: '',
-  currentSurveyCode: '',
-  surveyRatings: {},
-};
-
-// ── STATE SAVE/LOAD ──
-// localStorage = admin uchun (o'z kompyuteri)
-// URL hash = baholovchilar uchun (boshqa kompyuter)
-const LS_KEY = 'milliard360_v4';
-
-function saveState() {
-  try { localStorage.setItem(LS_KEY, JSON.stringify({ subject:appState.subject, evaluators:appState.evaluators, responses:appState.responses, selfDone:appState.selfDone, loginCodes:appState.loginCodes, generated:appState.generated })); } catch(e) {}
-}
-
-function loadState() {
-  try { const raw=localStorage.getItem(LS_KEY); if(!raw) return false; Object.assign(appState, JSON.parse(raw)); return appState.generated; } catch(e) { return false; }
-}
-
-function clearState() { localStorage.removeItem(LS_KEY); location.reload(); }
-
-// URL hash orqali session ma'lumotini encode qilish
-function encodeSession(data) {
-  try {
-    const json = JSON.stringify(data);
-    const b64 = btoa(unescape(encodeURIComponent(json)));
-    return b64;
-  } catch(e) { return ''; }
-}
-
-function decodeSession(b64) {
-  try {
-    return JSON.parse(decodeURIComponent(escape(atob(b64))));
-  } catch(e) { return null; }
-}
-
-// Admin "Ulashish URL"ini generatsiya qiladi - barcha session ma'lumotlari ichida
-function generateShareableUrl() {
-  const sessionData = {
-    subject: appState.subject,
-    loginCodes: appState.loginCodes,
-    evaluators: appState.evaluators.map ? appState.evaluators : appState.evaluators,
-    v: 4
-  };
-  const encoded = encodeSession(sessionData);
-  const baseUrl = window.location.href.split('?')[0].split('#')[0];
-  return baseUrl + '?s=' + encoded;
-}
-
-// Baholovchi URL'dan session yuklaydi
-function loadSessionFromUrl() {
-  const params = new URLSearchParams(window.location.search);
-  const s = params.get('s');
-  if(!s) return false;
-  const data = decodeSession(s);
-  if(!data || !data.loginCodes) return false;
-  appState.subject = data.subject || {};
-  appState.loginCodes = data.loginCodes || {};
-  // evaluators strukturasini tiklash
-  if(data.evaluators) appState.evaluators = data.evaluators;
-  appState.generated = true;
-  return true;
-}
-
-// ── CODE GEN ──
-function genCode() { return String(Math.floor(1000+Math.random()*9000)); }
-
-// ── INIT ──
-function initEvaluatorGroups() {
-  const container = document.getElementById('evaluatorGroups');
-  container.innerHTML = '';
-  GROUPS.forEach(g => {
-    if(!appState.evaluators[g.id]) appState.evaluators[g.id]=[{name:'',email:'',phone:'',code:'',done:false},{name:'',email:'',phone:'',code:'',done:false},{name:'',email:'',phone:'',code:'',done:false}];
-    const ev=appState.evaluators[g.id];
-    const div=document.createElement('div'); div.className='eval-group';
-    div.innerHTML=`
-      <div class="eval-group-header">
-        <div class="eval-icon" style="background:${g.bg};color:${g.color};">${g.icon}</div>
-        <div><div class="eval-group-title">${g.label}</div><div class="eval-group-count">${g.desc}</div></div>
-      </div>
-      ${[0,1,2].map(i=>`<div class="eval-row">
-        <input type="text" placeholder="Ism" value="${ev[i].name||''}" oninput="updateEval('${g.id}',${i},'name',this.value)">
-        <input type="email" placeholder="Email" value="${ev[i].email||''}" oninput="updateEval('${g.id}',${i},'email',this.value)">
-        <input type="tel" placeholder="Telefon" value="${ev[i].phone||''}" oninput="updateEval('${g.id}',${i},'phone',this.value)">
-      </div>`).join('')}`;
-    container.appendChild(div);
-    const hr=document.createElement('div'); hr.className='section-divider'; container.appendChild(hr);
+// ═══════════════════════════════════════
+// HELPERS
+// ═══════════════════════════════════════
+function pg(id){
+  ['pgLogin','pgAdmin','pgSubject','pgSurvey','pgDone'].forEach(p=>{
+    const el=document.getElementById(p);
+    el.style.display='none'; el.classList.remove('pg-center');
   });
-  if(appState.subject.name){
-    const f=(id,val)=>{const el=document.getElementById(id);if(el)el.value=val||'';};
-    f('subjectName',appState.subject.name); f('subjectRole',appState.subject.role); f('subjectCompany',appState.subject.company);
-  }
+  const el=document.getElementById(id);
+  el.style.display='flex';
+  if(id==='pgLogin') el.classList.add('pg-center');
+  else el.style.display='block';
 }
-function updateEval(gid,idx,field,val){ if(appState.evaluators[gid]) appState.evaluators[gid][idx][field]=val; }
 
-// ── GENERATE ──
-function generateLinks() {
-  const name=document.getElementById('subjectName').value.trim();
-  const role=document.getElementById('subjectRole').value.trim();
-  const company=document.getElementById('subjectCompany').value.trim();
-  if(!name){alert("Iltimos, ism kiriting!");return;}
-  appState.subject={name,role,company};
-  appState.loginCodes={}; appState.responses=[]; appState.selfDone=false;
+function toast(msg){
+  const t=document.getElementById('toast');
+  t.textContent=msg; t.style.opacity='1';
+  setTimeout(()=>t.style.opacity='0',3000);
+}
+
+function genCode(){
+  const data=db();
   const used=new Set();
-  GROUPS.forEach(g=>{
-    (appState.evaluators[g.id]||[]).forEach((e,i)=>{
-      let code; do{code=genCode();}while(used.has(code)); used.add(code);
-      appState.evaluators[g.id][i].code=code; appState.evaluators[g.id][i].done=false;
-      appState.loginCodes[code]={groupId:g.id,idx:i,name:e.name||`${g.label} ${i+1}`};
+  Object.values(data.sessions).forEach(s=>s.evaluators.forEach(e=>used.add(e.code)));
+  let c; do{c=String(Math.floor(1000+Math.random()*9000));}while(used.has(c));
+  return c;
+}
+
+function uid(){return Date.now().toString(36)+Math.random().toString(36).slice(2);}
+
+// ═══════════════════════════════════════
+// LOGIN
+// ═══════════════════════════════════════
+function switchTab(n){
+  document.getElementById('f1').style.display=n===1?'block':'none';
+  document.getElementById('f2').style.display=n===2?'block':'none';
+  document.getElementById('t1').classList.toggle('on',n===1);
+  document.getElementById('t2').classList.toggle('on',n===2);
+}
+
+function doLogin(){
+  const login=document.getElementById('iLogin').value.trim();
+  const pass=document.getElementById('iPass').value.trim();
+  const data=db();
+  const user=data.users.find(u=>u.login===login&&u.pass===pass);
+  if(!user){document.getElementById('eLogin').style.display='block';return;}
+  document.getElementById('eLogin').style.display='none';
+  CU=user;
+  document.getElementById('navName').textContent=user.name||user.login;
+  document.getElementById('btnLogout').style.display='block';
+  if(user.role==='admin') showAdmin();
+  else showSubject();
+}
+
+function doCode(){
+  const code=document.getElementById('iCode').value.trim();
+  const data=db();
+  let found=null, foundUserId=null;
+  Object.entries(data.sessions).forEach(([uid,sess])=>{
+    sess.evaluators.forEach(e=>{
+      if(e.code===code){found=e; foundUserId=uid;}
     });
   });
-  appState.generated=true; saveState();
-  renderLinksTable(); renderSelfAssessCard();
-  
-  // Ulashish URL ko'rsatish
-  const shareUrl = generateShareableUrl();
-  const shareDiv = document.getElementById('shareUrlCard');
-  if(shareDiv) {
-    shareDiv.style.display = 'block';
-    const urlEl = document.getElementById('shareUrlText');
-    if(urlEl) urlEl.value = shareUrl;
+  if(!found){document.getElementById('eCode').style.display='block';document.getElementById('iCode').value='';return;}
+  if(found.done){document.getElementById('eCode').textContent='Bu kod bilan allaqachon baholangan. Rahmat!';document.getElementById('eCode').style.display='block';return;}
+  document.getElementById('eCode').style.display='none';
+  CE={...found, userId:foundUserId};
+  openEvalSurvey();
+}
+
+function logout(){
+  CU=null; CE=null;
+  document.getElementById('navName').textContent='';
+  document.getElementById('btnLogout').style.display='none';
+  document.getElementById('iLogin').value='';
+  document.getElementById('iPass').value='';
+  pg('pgLogin');
+}
+
+// ═══════════════════════════════════════
+// ADMIN
+// ═══════════════════════════════════════
+function showAdmin(){
+  pg('pgAdmin');
+  const data=db();
+  const grid=document.getElementById('userGrid');
+  const subjects=data.users.filter(u=>u.role==='subject');
+  if(!subjects.length){
+    grid.innerHTML='<p style="color:var(--ink3);font-size:13px;grid-column:1/-1;">Hali foydalanuvchi yo\'q.</p>';
+    return;
   }
-  
-  goPage('survey');
-}
-
-// ── LINKS TABLE ──
-function renderLinksTable() {
-  const table=document.getElementById('linksTable'); if(!table) return;
-  const baseUrl=window.location.href.split('?')[0];
-  table.innerHTML=`<tr><th>Guruh</th><th>Ism</th><th style="text-align:center;">Kod</th><th>Xabar</th><th>Holat</th></tr>`;
-  GROUPS.forEach(g=>{
-    (appState.evaluators[g.id]||[]).forEach((e,i)=>{
-      const pName=e.name||`${g.label} ${i+1}`;
-      const code=e.code; if(!code) return;
-      const msg=`Salom ${pName}! Siz "${appState.subject.name}" ni 360° baholashga taklif qilindingiz.\n\nSaytga kiring: ${baseUrl}\nKodingiz: ${code}\n\nBu anonim baholash. Rahmat!`;
-      const tr=document.createElement('tr'); tr.id=`row-${code}`;
-      tr.innerHTML=`
-        <td><span style="color:${g.color};font-weight:500;">${g.icon} ${g.label.split('(')[0].trim()}</span></td>
-        <td style="font-weight:500;">${pName}</td>
-        <td style="text-align:center;"><span style="font-family:monospace;font-size:18px;font-weight:800;background:var(--gold-pale);border:1px solid var(--gold-light);padding:4px 12px;border-radius:6px;letter-spacing:3px;">${code}</span></td>
-        <td><button onclick="copyMsg('${encodeURIComponent(msg)}','cm-${code}')" style="font-size:11px;padding:5px 12px;border:1px solid var(--border);border-radius:6px;background:var(--surface);cursor:pointer;"><span id="cm-${code}">📋 Nusxa</span></button></td>
-        <td id="status-${code}">${e.done?'<span class="status-dot status-done"></span>Baholandi':'<span class="status-dot status-pending"></span>Kutilmoqda'}</td>`;
-      table.appendChild(tr);
-    });
+  grid.innerHTML='';
+  subjects.forEach(u=>{
+    const sess=data.sessions[u.id]||{evaluators:[],responses:[]};
+    const done=sess.responses.length;
+    const card=document.createElement('div');
+    card.className='ucard';
+    card.innerHTML=`<div class="un">${u.name||u.login}</div>
+      <div class="ur">${u.title||''}${u.company?' · '+u.company:''}</div>
+      <div class="us">${done} ta baholash · login: ${u.login}</div>`;
+    card.onclick=()=>{CU=u; showSubject();};
+    grid.appendChild(card);
   });
 }
 
-function copyAdminUrl() {
-  const urlEl = document.getElementById('shareUrlText');
-  if(!urlEl) return;
-  navigator.clipboard.writeText(urlEl.value).then(()=>{
-    const btn = document.getElementById('copyAdminBtn');
-    if(btn){btn.textContent='✓ Nusxalandi!';setTimeout(()=>btn.textContent='Nusxa olish',2000);}
-  }).catch(()=>{urlEl.select();document.execCommand('copy');});
+function toggleAddUser(){
+  const c=document.getElementById('addUserCard');
+  c.style.display=c.style.display==='none'?'block':'none';
 }
 
-function copyMsg(enc,spanId) {
-  navigator.clipboard.writeText(decodeURIComponent(enc)).then(()=>{
-    const el=document.getElementById(spanId); if(el){el.textContent='✓ Nusxalandi!';setTimeout(()=>el.textContent='📋 Nusxa',2000);}
-  }).catch(()=>prompt("Nusxalang:",decodeURIComponent(enc)));
+function createUser(){
+  const name=document.getElementById('nName').value.trim();
+  const title=document.getElementById('nTitle').value.trim();
+  const company=document.getElementById('nCompany').value.trim();
+  const login=document.getElementById('nLogin').value.trim();
+  const pass=document.getElementById('nPass').value.trim();
+  if(!name||!login||!pass){toast('Ism, login va parol majburiy!');return;}
+  const data=db();
+  if(data.users.find(u=>u.login===login)){toast('Bu login allaqachon bor!');return;}
+  const id=uid();
+  data.users.push({id,login,pass,role:'subject',name,title,company});
+  data.sessions[id]={evaluators:[],responses:[]};
+  save(data);
+  toast('✓ Foydalanuvchi yaratildi! Login: '+login+' | Parol: '+pass);
+  toggleAddUser();
+  ['nName','nTitle','nCompany','nLogin','nPass'].forEach(i=>document.getElementById(i).value='');
+  showAdmin();
 }
 
-// ── SELF ASSESS ──
-function renderSelfAssessCard() {
-  const card=document.getElementById('selfAssessCard'); if(!card) return;
-  const name=appState.subject.name||'Baholanuvchi';
-  const initials=name.split(' ').map(w=>w[0]||'').join('').toUpperCase().slice(0,2)||'??';
-  card.innerHTML=`
-    <div class="card-title">O'zingizni baholang</div>
-    <div class="card-sub">CCL Self-Insight metodologiyasi asosida — to'liq 360° uchun majburiy</div>
-    <div style="display:flex;align-items:center;gap:16px;margin-top:1rem;padding:1rem;background:var(--gold-pale);border:1px solid var(--gold-light);border-radius:var(--radius);">
-      <div style="width:48px;height:48px;border-radius:50%;background:var(--gold-light);border:2px solid var(--gold);display:flex;align-items:center;justify-content:center;font-family:'DM Serif Display';font-size:18px;color:var(--gold);flex-shrink:0;">${initials}</div>
-      <div style="flex:1;"><div style="font-weight:600;font-size:14px;color:var(--ink);">${name}</div><div style="font-size:12px;color:var(--ink3);">O'z-o'zini baholash — boshqalar bahosi bilan solishtiriladi</div></div>
-      ${appState.selfDone?'<div style="color:var(--green);font-size:13px;font-weight:600;">✓ Baholandi</div>':`<button class="btn-primary" style="padding:8px 18px;font-size:13px;" onclick="openSelfSurvey()">Boshlash →</button>`}
+// ═══════════════════════════════════════
+// SUBJECT PAGE
+// ═══════════════════════════════════════
+function showSubject(){
+  pg('pgSubject');
+  document.getElementById('subHdr').innerHTML=`
+    <h1 style="font-family:'DM Serif Display',serif;font-size:24px;">${CU.name||CU.login}</h1>
+    <p style="font-size:13px;color:var(--ink3);">${CU.title||''}${CU.company?' · '+CU.company:''}</p>`;
+  stab(1);
+}
+
+function stab(n){
+  [1,2,3].forEach(i=>{
+    document.getElementById('stab'+i).classList.toggle('on',i===n);
+    document.getElementById('stab-'+i).style.display=i===n?'block':'none';
+  });
+  if(n===1) renderEvalTab();
+  if(n===2) renderResultsTab();
+  if(n===3) renderSelfTab();
+}
+
+// ── EVALUATORS ──
+function renderEvalTab(){
+  const data=db();
+  const sess=data.sessions[CU.id]||{evaluators:[],responses:[]};
+  const el=document.getElementById('stab-1');
+
+  if(!sess.evaluators.length){
+    el.innerHTML=`<div class="card">
+      <div class="card-title">Baholovchilarni qo'shing</div>
+      <div class="card-sub">Har guruhdan 3 kishining ism va kontaktini kiriting</div>
+      <div id="egContainer"></div>
+      <button class="btn btn-gold mt2" onclick="saveEvals()">Saqlash va kodlar yaratish →</button>
     </div>`;
-}
-
-// ── LOGIN ──
-function quickLogin() {
-  const input=document.getElementById('quickCodeInput');
-  const err=document.getElementById('quickLoginError');
-  const code=(input?input.value:'').trim();
-  if(!err) return;
-  if(code.length<4){err.style.color='#ff6b6b';err.textContent='4 raqam kiriting';err.style.display='block';return;}
-  if(!appState.generated){err.style.color='#ff6b6b';err.textContent='Tizim yuklanmagan. Sahifani yangilang.';err.style.display='block';return;}
-  const ev=appState.loginCodes[code];
-  if(!ev){err.style.color='#ff6b6b';err.textContent="Noto'g'ri kod! Yuborilgan kodni tekshiring.";err.style.display='block';if(input)input.value='';return;}
-  if(appState.evaluators[ev.groupId][ev.idx].done){err.style.color='var(--green)';err.textContent='✓ Siz allaqachon baholashni yakunlagansiz. Rahmat!';err.style.display='block';return;}
-  err.style.display='none';
-  const group=GROUPS.find(g=>g.id===ev.groupId);
-  goPage('survey'); setTimeout(()=>openSurvey(group,code),150);
-}
-function showLoginPage(p){const o=document.getElementById('loginOverlay');if(o)o.classList.remove('hidden');if(p){const i=document.getElementById('loginCodeInput');if(i)i.value=p;}}
-function hideLoginPage(){const o=document.getElementById('loginOverlay');if(o)o.classList.add('hidden');}
-function attemptLogin(){
-  const code=(document.getElementById('loginCodeInput').value||'').trim();
-  const err=document.getElementById('loginError');
-  if(!appState.generated){err.textContent='Tizim yuklanmagan.';err.style.display='block';return;}
-  const ev=appState.loginCodes[code];
-  if(!ev){err.textContent="Noto'g'ri kod!";err.style.display='block';document.getElementById('loginCodeInput').value='';return;}
-  if(appState.evaluators[ev.groupId][ev.idx].done){hideLoginPage();alert('Allaqachon baholandi. Rahmat!');return;}
-  err.style.display='none'; hideLoginPage();
-  const group=GROUPS.find(g=>g.id===ev.groupId);
-  goPage('survey'); setTimeout(()=>openSurvey(group,code),150);
-}
-
-// ── SELF SURVEY ──
-function openSelfSurvey() {
-  appState.currentSurveyRole='self'; appState.currentSurveyCode='self'; appState.surveyRatings={};
-  document.getElementById('surveySelectView').classList.add('hidden');
-  document.getElementById('surveyFormView').classList.remove('hidden');
-  const name=appState.subject.name||'Baholanuvchi';
-  const initials=name.split(' ').map(w=>w[0]||'').join('').toUpperCase().slice(0,2)||'??';
-  document.getElementById('surveyAvatar').textContent=initials;
-  document.getElementById('surveyRoleBadge').textContent="🪞 O'z-o'zini baholash";
-  document.getElementById('surveyTitle').textContent="O'zingizni baholang";
-  document.getElementById('surveyDesc').textContent="CCL Self-Insight asosida — o'z kuchli va zaif tomonlaringizni ob'ektiv baholang.";
-  const ab=document.getElementById('anonBadge');if(ab)ab.style.display='none';
-  buildSurveyQuestions('self');
-}
-
-// ── EVALUATOR SURVEY ──
-function openSurvey(group,code) {
-  appState.currentSurveyRole=group.id; appState.currentSurveyCode=code; appState.surveyRatings={};
-  document.getElementById('surveySelectView').classList.add('hidden');
-  document.getElementById('surveyFormView').classList.remove('hidden');
-  const name=appState.subject.name||'Baholanuvchi';
-  const initials=name.split(' ').map(w=>w[0]||'').join('').toUpperCase().slice(0,2)||'??';
-  document.getElementById('surveyAvatar').textContent=initials;
-  document.getElementById('surveyRoleBadge').textContent=group.icon+' '+group.label;
-  document.getElementById('surveyTitle').textContent=name+' ni baholang';
-  document.getElementById('surveyDesc').textContent=`Siz ${group.label} sifatida ${name} haqida 25 ta savolga javob berasiz. To'liq anonim.`;
-  const ab=document.getElementById('anonBadge');if(ab)ab.style.display='flex';
-  buildSurveyQuestions(group.id);
-}
-
-function buildSurveyQuestions(roleId) {
-  const qs = roleId==='self' ? SELF_QUESTIONS : (GROUP_QUESTIONS[roleId]||GROUP_QUESTIONS.xodim);
-  const container=document.getElementById('surveyQuestions');
-  container.innerHTML='';
-  let qIdx=0;
-  qs.forEach(section=>{
-    const sec=document.createElement('div'); sec.className='q-section';
-    sec.innerHTML=`<div class="q-section-title">${section.cat}</div>`;
-    section.qs.forEach(q=>{
-      const qi=qIdx++;
-      const div=document.createElement('div'); div.className='q-item';
-      div.innerHTML=`
-        <div class="q-text">${q}</div>
-        <div class="rating-row" id="rr-${qi}">
-          ${[1,2,3,4,5].map(v=>`<button class="r-btn" onclick="rateSurvey(${qi},${v})" data-v="${v}">${v}</button>`).join('')}
-        </div>
-        <div class="r-labels"><span>1 — Umuman emas</span><span>5 — Doimo, mukammal</span></div>`;
-      sec.appendChild(div);
+    buildEvalGroups();
+  } else {
+    const baseUrl=window.location.href.split('?')[0];
+    let rows='';
+    GROUPS.forEach(g=>{
+      sess.evaluators.filter(e=>e.gid===g.id).forEach(e=>{
+        const msg=`Salom ${e.name}!\n\nSiz "${CU.name}" ni 360° baholashga taklif qilindingiz.\n\nSaytga kiring: ${baseUrl}\nKodingiz: ${e.code}\n\nBu anonim baholash. Rahmat!`;
+        rows+=`<tr>
+          <td><span style="color:${g.color};font-weight:500;">${g.icon} ${g.label}</span></td>
+          <td style="font-weight:500;">${e.name}</td>
+          <td><span class="code-box">${e.code}</span></td>
+          <td><button onclick="copyT('${encodeURIComponent(msg)}','cb${e.code}')" style="font-size:11px;padding:4px 10px;border:1px solid var(--border);border-radius:6px;background:var(--s);cursor:pointer;"><span id="cb${e.code}">📋 Nusxa</span></button></td>
+          <td>${e.done?'<span class="dot dot-g"></span><span class="badge bdg-g">Baholandi</span>':'<span class="dot dot-y"></span><span class="badge bdg-y">Kutilmoqda</span>'}</td>
+        </tr>`;
+      });
     });
-    container.appendChild(sec);
-  });
-  document.getElementById('commentStrong').value='';
-  document.getElementById('commentImprove').value='';
-  updateSurveyProgress();
-}
-
-function rateSurvey(qi,val){
-  document.getElementById(`rr-${qi}`).querySelectorAll('.r-btn').forEach(b=>b.classList.toggle('sel',+b.dataset.v<=val));
-  appState.surveyRatings[qi]=val; updateSurveyProgress();
-}
-function updateSurveyProgress(){
-  const done=Object.keys(appState.surveyRatings).length,total=25;
-  document.getElementById('surveyProgress').style.width=(done/total*100)+'%';
-  document.getElementById('submitSurveyBtn').disabled=done<total;
-}
-
-function submitSurvey(){
-  const isSelf=appState.currentSurveyRole==='self';
-  appState.responses.push({role:appState.currentSurveyRole,ratings:{...appState.surveyRatings},commentStrong:document.getElementById('commentStrong').value,commentImprove:document.getElementById('commentImprove').value,isSelf,timestamp:Date.now()});
-  if(isSelf){appState.selfDone=true;}else{
-    const ev=appState.loginCodes[appState.currentSurveyCode];
-    if(ev){appState.evaluators[ev.groupId][ev.idx].done=true;const el=document.getElementById(`status-${appState.currentSurveyCode}`);if(el)el.innerHTML='<span class="status-dot status-done"></span>Baholandi';}
+    el.innerHTML=`<div class="card">
+      <div class="fb" style="margin-bottom:1rem;">
+        <div><div class="card-title">Baholovchilar</div><div class="card-sub">Har biriga kodni yuboring</div></div>
+        <button class="btn btn-out btn-sm" onclick="resetEvals()">Qayta sozlash</button>
+      </div>
+      <div style="overflow-x:auto;"><table class="tbl"><tr><th>Guruh</th><th>Ism</th><th>Kod</th><th>Xabar</th><th>Holat</th></tr>${rows}</table></div>
+    </div>`;
   }
-  saveState();
-  document.getElementById('surveySelectView').classList.remove('hidden');
-  document.getElementById('surveyFormView').classList.add('hidden');
-  renderSelfAssessCard();
-  showToast(`✓ Baholash qabul qilindi! Jami: ${appState.responses.length} ta`);
 }
 
-function showToast(msg){
-  let t=document.getElementById('toast');
-  if(!t){t=document.createElement('div');t.id='toast';t.style.cssText='position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:var(--ink);color:#fff;padding:12px 24px;border-radius:99px;font-size:13px;z-index:9999;opacity:0;transition:opacity 0.3s;pointer-events:none;';document.body.appendChild(t);}
-  t.textContent=msg;t.style.opacity='1';setTimeout(()=>t.style.opacity='0',3000);
-}
-
-// ── RESULTS ──
-function showResults(){
-  goPage('results');
-  if(!appState.responses.length){document.getElementById('resultsEmpty').classList.remove('hidden');document.getElementById('resultsContent').classList.add('hidden');return;}
-  document.getElementById('resultsEmpty').classList.add('hidden');document.getElementById('resultsContent').classList.remove('hidden');
-  renderResults();
-}
-
-function catAvg(responses,roleId){
-  const qs=roleId==='self'?SELF_QUESTIONS:(GROUP_QUESTIONS[roleId]||GROUP_QUESTIONS.xodim);
-  return qs.map((section,si)=>{
-    const qStart=qs.slice(0,si).reduce((a,s)=>a+s.qs.length,0);
-    let total=0,count=0;
-    responses.forEach(r=>section.qs.forEach((_,qi)=>{const v=r.ratings[qStart+qi];if(v){total+=v;count++;}}));
-    return{cat:section.cat,avg:count?total/count:0};
+function buildEvalGroups(){
+  const c=document.getElementById('egContainer');
+  c.innerHTML='';
+  GROUPS.forEach(g=>{
+    const div=document.createElement('div');
+    div.className='eg';
+    div.innerHTML=`<div class="eg-hdr"><div class="eg-ico" style="background:${g.bg};color:${g.color};">${g.icon}</div><div class="eg-title">${g.label}</div></div>
+      ${[0,1,2].map(i=>`<div class="eg-row">
+        <input placeholder="Ism" id="ev_${g.id}_${i}_n">
+        <input placeholder="Tel / Email" id="ev_${g.id}_${i}_c">
+      </div>`).join('')}
+      <div style="height:1px;background:var(--border);margin:10px 0;"></div>`;
+    c.appendChild(div);
   });
 }
 
-// Umumiy 5 kompetensiya uchun normalize (har guruh o'z savollariga ega)
-function overallAvg(responses){
-  if(!responses.length) return 0;
+function saveEvals(){
+  const data=db();
+  if(!data.sessions[CU.id]) data.sessions[CU.id]={evaluators:[],responses:[]};
+  const evals=[];
+  GROUPS.forEach(g=>{
+    [0,1,2].forEach(i=>{
+      const name=(document.getElementById(`ev_${g.id}_${i}_n`)?.value||'').trim();
+      const contact=(document.getElementById(`ev_${g.id}_${i}_c`)?.value||'').trim();
+      if(name){
+        evals.push({id:uid(),gid:g.id,name,contact,code:genCode(),done:false});
+      }
+    });
+  });
+  if(!evals.length){toast('Kamida 1 ta ism kiriting!');return;}
+  data.sessions[CU.id].evaluators=evals;
+  save(data);
+  toast('✓ Kodlar yaratildi!');
+  renderEvalTab();
+}
+
+function resetEvals(){
+  if(!confirm('Hamma kodlar o\'chiriladi. Davom etasizmi?')) return;
+  const data=db();
+  if(data.sessions[CU.id]) data.sessions[CU.id].evaluators=[];
+  save(data);
+  renderEvalTab();
+}
+
+function copyT(enc,spanId){
+  const text=decodeURIComponent(enc);
+  navigator.clipboard.writeText(text).then(()=>{
+    const el=document.getElementById(spanId);
+    if(el){el.textContent='✓ Nusxalandi!';setTimeout(()=>el.textContent='📋 Nusxa',2000);}
+  }).catch(()=>prompt('Nusxalang:',text));
+}
+
+// ── SELF TAB ──
+function renderSelfTab(){
+  const data=db();
+  const sess=data.sessions[CU.id]||{evaluators:[],responses:[]};
+  const selfDone=sess.responses.some(r=>r.isSelf);
+  const el=document.getElementById('stab-3');
+  if(selfDone){
+    el.innerHTML=`<div class="card" style="text-align:center;padding:2.5rem;">
+      <div style="font-size:36px;margin-bottom:10px;">✅</div>
+      <div class="card-title">O'zingizni baholadingiz</div>
+      <div class="card-sub mt1">Natijalar "Natijalar" tabida ko'rinadi</div>
+    </div>`;
+  } else {
+    el.innerHTML=`<div class="card">
+      <div class="card-title">O'zingizni baholang</div>
+      <div class="card-sub">CCL Self-Insight metodologiyasi asosida — to'liq 360° uchun zarur</div>
+      <div style="padding:1rem;background:var(--gold-pale);border:1px solid var(--gold-light);border-radius:var(--r);display:flex;align-items:center;gap:14px;margin-top:0.5rem;">
+        <div style="width:44px;height:44px;border-radius:50%;background:var(--gold-light);border:2px solid var(--gold);display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:700;color:var(--gold);flex-shrink:0;">
+          ${(CU.name||'?').split(' ').map(w=>w[0]).join('').toUpperCase().slice(0,2)}
+        </div>
+        <div style="flex:1;">
+          <div style="font-weight:600;font-size:14px;">${CU.name||CU.login}</div>
+          <div style="font-size:12px;color:var(--ink3);">O'zingiz haqingizda halol va ob'ektiv javob bering</div>
+        </div>
+        <button class="btn btn-dark btn-sm" onclick="openSelfSurvey()">Boshlash →</button>
+      </div>
+    </div>`;
+  }
+}
+
+// ── RESULTS TAB ──
+function renderResultsTab(){
+  const data=db();
+  const sess=data.sessions[CU.id]||{evaluators:[],responses:[]};
+  const el=document.getElementById('stab-2');
+  if(!sess.responses.length){
+    el.innerHTML=`<div class="card" style="text-align:center;padding:2.5rem;">
+      <div style="font-size:36px;margin-bottom:10px;">📊</div>
+      <div class="card-title">Hali natija yo'q</div>
+      <div class="card-sub mt1">Baholovchilar to'ldirgach bu yerda paydo bo'ladi</div>
+    </div>`;
+    return;
+  }
+  renderResults(sess.responses);
+}
+
+function avg(responses){
   let t=0,c=0;
-  responses.forEach(r=>{Object.values(r.ratings).forEach(v=>{if(v){t+=v;c++;}});});
+  responses.forEach(r=>Object.values(r.ratings).forEach(v=>{if(v){t+=v;c++;}}));
   return c?t/c:0;
 }
 
-function renderResults(){
-  const all=appState.responses;
-  const selfR=all.filter(r=>r.isSelf);
-  const othersR=all.filter(r=>!r.isSelf);
-  const name=appState.subject.name||'Baholanuvchi';
+function renderResults(responses){
+  const el=document.getElementById('stab-2');
+  const others=responses.filter(r=>!r.isSelf);
+  const selfs=responses.filter(r=>r.isSelf);
+  const overall=avg(responses);
+  const selfAvg=avg(selfs);
+  const othersAvg=avg(others);
 
-  document.getElementById('respCount').textContent=`${othersR.length} baholovchi + ${selfR.length?"o'zingiz":'self yo\'q'}`;
-  document.getElementById('resultsName').textContent=name+' — 360° Liderlik profili';
-  document.getElementById('resultsRole').textContent=(appState.subject.role||'')+(appState.subject.company?' · '+appState.subject.company:'');
+  let html=`<div class="res-hero fu">
+    <div class="chip">${others.length} baholovchi${selfs.length?" + o'zingiz":''}</div>
+    <div class="big-score">${overall.toFixed(1)}</div>
+    <div style="font-size:12px;opacity:0.5;margin-bottom:8px;">umumiy ball (5 dan)</div>
+    <h2 style="font-family:'DM Serif Display',serif;font-size:22px;">${CU.name} — 360° Liderlik profili</h2>
+    <p style="font-size:12px;opacity:0.5;">${CU.title||''}${CU.company?' · '+CU.company:''}</p>
+  </div>
+  <canvas id="rc" width="380" height="280" style="display:block;margin:0 auto 1.25rem;"></canvas>
+  <div style="margin-bottom:1.25rem;"><div class="sec-hdr">Guruh bo'yicha</div>`;
 
-  const selfAvg=overallAvg(selfR);
-  const othersAvg=overallAvg(othersR);
-  const overall=overallAvg(all);
-  document.getElementById('overallScore').textContent=overall.toFixed(1);
-
-  // Group breakdown
-  const rbRows=document.getElementById('rbRows'); rbRows.innerHTML='';
-  if(selfR.length){
-    rbRows.innerHTML+=`<div class="rb-row" style="background:var(--gold-pale);border-radius:var(--radius);padding:10px 12px;margin-bottom:4px;">
-      <div class="rb-icon" style="background:var(--gold-light);color:var(--gold);">🪞</div>
-      <div class="rb-name" style="font-weight:500;">O'zingiz (Self-assessment)</div>
-      <div class="rb-bar-wrap"><div class="rb-bar"><div class="rb-fill" style="width:${Math.round(selfAvg/5*100)}%;background:var(--gold);"></div></div></div>
-      <div class="rb-score">${selfAvg.toFixed(1)}</div></div>`;
+  if(selfs.length){
+    html+=`<div class="rb-row" style="background:var(--gold-pale);border-radius:var(--r);padding:8px 10px;margin-bottom:4px;">
+      <div class="rb-ico" style="background:var(--gold-light);color:var(--gold);">🪞</div>
+      <div class="rb-name" style="font-weight:500;">O'zingiz</div>
+      <div class="rb-bar"><div style="height:100%;width:${Math.round(selfAvg/5*100)}%;background:var(--gold);border-radius:99px;"></div></div>
+      <div class="rb-score">${selfAvg.toFixed(1)}</div>
+    </div>`;
   }
-  GROUPS.forEach(g=>{
-    const gR=othersR.filter(r=>r.role===g.id); if(!gR.length) return;
-    const avg=overallAvg(gR);
-    const div=document.createElement('div');div.className='rb-row';
-    div.innerHTML=`<div class="rb-icon" style="background:${g.bg};color:${g.color};">${g.icon}</div>
-      <div class="rb-name">${g.label.split('(')[0].trim()} (${gR.length})</div>
-      <div class="rb-bar-wrap"><div class="rb-bar"><div class="rb-fill" style="width:${Math.round(avg/5*100)}%;background:${g.color};"></div></div></div>
-      <div class="rb-score">${avg.toFixed(1)}</div>`;
-    rbRows.appendChild(div);
+
+  const gAvgs=GROUPS.map(g=>{
+    const gR=others.filter(r=>r.gid===g.id);
+    return{g,avg:avg(gR),count:gR.length};
+  }).filter(x=>x.count>0).sort((a,b)=>b.avg-a.avg);
+
+  gAvgs.forEach(x=>{
+    html+=`<div class="rb-row">
+      <div class="rb-ico" style="background:${x.g.bg};color:${x.g.color};">${x.g.icon}</div>
+      <div class="rb-name">${x.g.label} (${x.count})</div>
+      <div class="rb-bar"><div style="height:100%;width:${Math.round(x.avg/5*100)}%;background:${x.g.color};border-radius:99px;"></div></div>
+      <div class="rb-score">${x.avg.toFixed(1)}</div>
+    </div>`;
   });
 
-  // Metrics grid — har guruh o'z kategoriyasi bilan
-  const grid=document.getElementById('metricsGrid');
-  grid.innerHTML='';
-  GROUPS.forEach(g=>{
-    const gR=othersR.filter(r=>r.role===g.id); if(!gR.length) return;
-    const cats=catAvg(gR,g.id);
-    cats.forEach(c=>{
-      const pct=Math.round(c.avg/5*100);
-      const col=pct>=80?'#1a7a4a':pct>=60?'#c8a84b':'#c0392b';
-      const card=document.createElement('div'); card.className='metric-card';
-      card.innerHTML=`<div class="metric-name" style="color:${g.color};">${g.icon} ${c.cat}</div>
-        <div class="metric-score">${c.avg.toFixed(1)}<span>/5</span></div>
-        <div class="metric-bar"><div class="metric-fill" style="width:${pct}%;background:${col};"></div></div>`;
-      grid.appendChild(card);
-    });
-  });
-
-  // Radar — 5 guruh umumiy bali
-  const radarData=GROUPS.map(g=>{
-    const gR=othersR.filter(r=>r.role===g.id);
-    return{cat:g.label.split('(')[0].trim(),avg:gR.length?overallAvg(gR):0};
-  });
-  drawRadar(radarData);
-
-  // SW
-  const groupAvgs=GROUPS.map(g=>({label:g.label.split('(')[0].trim(),avg:overallAvg(othersR.filter(r=>r.role===g.id))})).filter(g=>g.avg>0).sort((a,b)=>b.avg-a.avg);
-  document.getElementById('swCards').innerHTML=`
-    <div class="sw-card strong"><div class="sw-title">Kuchli tomonlar</div>${groupAvgs.slice(0,2).map(g=>`<div class="sw-item">${g.label} — ${g.avg.toFixed(1)}/5</div>`).join('')}</div>
-    <div class="sw-card weak"><div class="sw-title">Rivojlanish zarurati</div>${[...groupAvgs].reverse().slice(0,2).map(g=>`<div class="sw-item">${g.label} — ${g.avg.toFixed(1)}/5</div>`).join('')}</div>`;
-
-  // Self vs Others gap
-  if(selfR.length&&othersR.length){
+  if(selfs.length&&others.length){
     const gap=selfAvg-othersAvg;
-    const gapCard=document.createElement('div');
-    gapCard.style.cssText='margin-bottom:1.5rem;';
-    gapCard.innerHTML=`<div style="background:${Math.abs(gap)>0.5?'#fef5f5':'#f0faf4'};border:1px solid ${Math.abs(gap)>0.5?'#f5c6c6':'#b7e4c7'};border-radius:var(--radius);padding:1rem 1.25rem;">
-      <div style="font-size:11px;font-weight:700;letter-spacing:0.08em;color:${Math.abs(gap)>0.5?'var(--red)':'var(--green)'};margin-bottom:8px;">CCL KO'R NUQTA TAHLILI</div>
-      <div style="font-size:14px;color:var(--ink);line-height:1.6;">
-        Siz o'zingizni <b>${selfAvg.toFixed(1)}/5</b> deb baholadingiz.<br>
-        Boshqalar sizni <b>${othersAvg.toFixed(1)}/5</b> deb baholadi.<br>
-        Farq: <b style="color:${gap>0.3?'var(--red)':gap<-0.3?'var(--green)':'var(--ink)'};">${gap>0?'+':''}${gap.toFixed(1)}</b>
-        ${Math.abs(gap)>0.5?'<br><span style="color:var(--red);font-size:12px;">⚠️ Sezilarli ko\'r nuqta mavjud — bu rivojlanishning asosiy imkoniyati</span>':'<br><span style="color:var(--green);font-size:12px;">✓ O\'z-o\'zini anglash darajasi yaxshi</span>'}
-      </div></div>`;
-    document.getElementById('swCards').after(gapCard);
+    html+=`<div style="margin-top:0.75rem;padding:0.9rem;background:${Math.abs(gap)>0.5?'#fef5f5':'#f0faf4'};border:1px solid ${Math.abs(gap)>0.5?'#f5c6c6':'#b7e4c7'};border-radius:var(--r);">
+      <div style="font-size:10px;font-weight:700;letter-spacing:0.08em;color:${Math.abs(gap)>0.5?'var(--red)':'var(--green)'};margin-bottom:5px;">KO'R NUQTA TAHLILI (CCL)</div>
+      <div style="font-size:13px;color:var(--ink);line-height:1.6;">
+        Siz o'zingizni <b>${selfAvg.toFixed(1)}/5</b> | Boshqalar: <b>${othersAvg.toFixed(1)}/5</b> | Farq: <b>${gap>0?'+':''}${gap.toFixed(1)}</b>
+        ${Math.abs(gap)>0.5?'<br><span style="font-size:11px;color:var(--red);">⚠️ Sezilarli ko\'r nuqta bor</span>':''}
+      </div>
+    </div>`;
   }
 
-  // Action steps
-  const weak=[...groupAvgs].reverse().slice(0,3);
-  document.getElementById('actionSteps').innerHTML=weak.map((g,i)=>{
-    const tags=['urgent','mid','long'],labs=['Zudlik bilan (30 kun)','O\'rta muddatli (1-3 oy)','Uzoq muddatli (3-6 oy)'];
-    return `<div class="step-action-item"><div class="step-action-num">${i+1}</div><div class="step-action-content">
-      <div class="tag ${tags[i]}">${labs[i]}</div><h4>${g.label} sohasini mustahkamlash</h4>
-      <p>Ball: ${g.avg.toFixed(1)}/5 — CCL tadqiqotlari asosida bu soha liderlik samaradorligiga to'g'ridan-to'g'ri ta'sir qiladi.</p>
-    </div></div>`;
-  }).join('');
+  html+=`</div><div class="sw">
+    <div class="sw-card sw-s"><div class="sw-t">Kuchli tomonlar</div>${gAvgs.slice(0,2).map(x=>`<div class="sw-i">${x.g.label} — ${x.avg.toFixed(1)}/5</div>`).join('')}</div>
+    <div class="sw-card sw-w"><div class="sw-t">Rivojlanish zarurati</div>${[...gAvgs].reverse().slice(0,2).map(x=>`<div class="sw-i">${x.g.label} — ${x.avg.toFixed(1)}/5</div>`).join('')}</div>
+  </div>
+  <div class="ai-box">
+    <div class="ai-lbl">Claude AI — Chuqur tahlil</div>
+    <div class="ai-txt" id="aiEl"><div class="dots" id="aiLoad"><span></span><span></span><span></span><span style="font-size:13px;color:var(--ink3);margin-left:8px;">Tahlil qilinmoqda...</span></div></div>
+  </div>
+  <div class="card"><div class="card-title">Harakatlar rejasi</div><div id="actEl"></div></div>`;
 
-  runAIAnalysis(radarData, selfAvg, othersAvg, overall, all);
+  el.innerHTML=html;
+  setTimeout(()=>drawRadar(gAvgs),50);
+
+  const weak=[...gAvgs].reverse().slice(0,3);
+  const tags=['t-r','t-y','t-g'],labs=['30 kun','1-3 oy','3-6 oy'];
+  document.getElementById('actEl').innerHTML=weak.map((x,i)=>`<div class="act-item">
+    <div class="act-num">${i+1}</div>
+    <div class="act-body"><div class="tag ${tags[i]}">${labs[i]}</div>
+    <h4>${x.g.label} sohasini mustahkamlash</h4>
+    <p>Ball: ${x.avg.toFixed(1)}/5 — Bu sohaga e'tibor qaratish liderlik samaradorligini oshiradi.</p></div>
+  </div>`).join('');
+
+  runAI(responses, overall, selfAvg, othersAvg, gAvgs);
 }
 
-function drawRadar(data){
-  const canvas=document.getElementById('radarCanvas');if(!canvas)return;
-  const ctx=canvas.getContext('2d');
-  const W=400,H=300,cx=200,cy=155,R=105;
+function drawRadar(gAvgs){
+  const c=document.getElementById('rc'); if(!c) return;
+  const ctx=c.getContext('2d');
+  const W=380,H=280,cx=190,cy=145,R=100;
   ctx.clearRect(0,0,W,H);
+  const data=GROUPS.map(g=>gAvgs.find(x=>x.g.id===g.id)||{g,avg:0});
   const n=data.length;
   const angles=data.map((_,i)=>-Math.PI/2+i*2*Math.PI/n);
   for(let r=1;r<=5;r++){ctx.beginPath();angles.forEach((a,i)=>{const x=cx+(R*r/5)*Math.cos(a),y=cy+(R*r/5)*Math.sin(a);i===0?ctx.moveTo(x,y):ctx.lineTo(x,y);});ctx.closePath();ctx.strokeStyle='#e8e4d9';ctx.lineWidth=1;ctx.stroke();}
   angles.forEach(a=>{ctx.beginPath();ctx.moveTo(cx,cy);ctx.lineTo(cx+R*Math.cos(a),cy+R*Math.sin(a));ctx.strokeStyle='#e8e4d9';ctx.lineWidth=1;ctx.stroke();});
-  ctx.font='10px DM Sans';ctx.textAlign='center';ctx.fillStyle='#3a3830';
-  data.forEach((d,i)=>{const a=angles[i];const words=d.cat.split(' ');const lx=cx+(R+26)*Math.cos(a),ly=cy+(R+26)*Math.sin(a);words.forEach((w,wi)=>ctx.fillText(w,lx,ly+wi*12-((words.length-1)*6)));});
+  ctx.font='11px DM Sans';ctx.textAlign='center';ctx.fillStyle='#3a3830';
+  data.forEach((d,i)=>{const a=angles[i];ctx.fillText(d.g.label.split("'")[0].trim(),cx+(R+24)*Math.cos(a),cy+(R+24)*Math.sin(a)+4);});
   if(data.some(d=>d.avg>0)){
-    ctx.beginPath();data.forEach((d,i)=>{const a=angles[i],r2=R*d.avg/5;const x=cx+r2*Math.cos(a),y=cy+r2*Math.sin(a);i===0?ctx.moveTo(x,y):ctx.lineTo(x,y);});
+    ctx.beginPath();data.forEach((d,i)=>{const a=angles[i],r2=R*d.avg/5;i===0?ctx.moveTo(cx+r2*Math.cos(a),cy+r2*Math.sin(a)):ctx.lineTo(cx+r2*Math.cos(a),cy+r2*Math.sin(a));});
     ctx.closePath();ctx.fillStyle='rgba(200,168,75,0.18)';ctx.fill();ctx.strokeStyle='#c8a84b';ctx.lineWidth=2.5;ctx.stroke();
     data.forEach((d,i)=>{if(!d.avg)return;const a=angles[i],r2=R*d.avg/5;ctx.beginPath();ctx.arc(cx+r2*Math.cos(a),cy+r2*Math.sin(a),5,0,Math.PI*2);ctx.fillStyle='#c8a84b';ctx.fill();ctx.strokeStyle='#fff';ctx.lineWidth=2;ctx.stroke();});
   }
 }
 
-async function runAIAnalysis(radarData,selfAvg,othersAvg,overall,responses){
-  const el=document.getElementById('aiAnalysis');
-  document.getElementById('aiLoading').style.display='flex';
-  const name=appState.subject.name||'Baholanuvchi';
-  const role=appState.subject.role||'rahbar';
-  const company=appState.subject.company||'';
+async function runAI(responses, overall, selfAvg, othersAvg, gAvgs){
+  const name=CU.name||'Baholanuvchi';
   const hasSelf=responses.some(r=>r.isSelf);
   const gap=selfAvg-othersAvg;
+  const comments=responses.flatMap(r=>[r.cmtS&&`[+] ${r.cmtS}`,r.cmtI&&`[-] ${r.cmtI}`].filter(Boolean));
+  const gDetail=gAvgs.map(x=>`${x.g.label}: ${x.avg.toFixed(1)}/5`).join(', ');
 
-  const groupDetail=GROUPS.map(g=>{
-    const gR=responses.filter(r=>r.role===g.id&&!r.isSelf);
-    if(!gR.length)return'';
-    const avg=overallAvg(gR);
-    const cats=catAvg(gR,g.id).map(c=>`    ${c.cat}: ${c.avg.toFixed(1)}/5`).join('\n');
-    return `${g.label.split('(')[0].trim()} (${gR.length} ta) — Umumiy: ${avg.toFixed(1)}/5\n${cats}`;
-  }).filter(Boolean).join('\n');
+  const prompt=`Siz CCL sertifikatlangan liderlik kouchiсiz. O'zbek tilida professional tahlil yozing.
 
-  const comments=responses.flatMap(r=>[r.commentStrong&&`[Kuchli] ${r.commentStrong}`,r.commentImprove&&`[Rivojlanish] ${r.commentImprove}`].filter(Boolean));
+BAHOLANUVCHI: ${name}${CU.title?' — '+CU.title:''}${CU.company?' | '+CU.company:''}
+UMUMIY: ${overall.toFixed(2)}/5
+GURUHLAR: ${gDetail}
+${hasSelf?`O'Z BAHOSI: ${selfAvg.toFixed(1)} | BOSHQALAR: ${othersAvg.toFixed(1)} | FARQ: ${gap>0?'+':''}${gap.toFixed(2)}`:''}
+IZOHLAR: ${comments.slice(0,6).join(' | ')||'Yo\'q'}
 
-  const prompt=`Siz CCL (Center for Creative Leadership) sertifikatlangan liderlik kouchiсiz. ${name} uchun 360° baholash natijalarini professional darajada tahlil qiling. O'zbek tilida yozing.
-
-BAHOLANUVCHI: ${name}${role?' — '+role:''}${company?' | '+company:''}
-UMUMIY BALL (barcha): ${overall.toFixed(2)}/5
-${hasSelf?`\nO'Z BAHOSI: ${selfAvg.toFixed(1)}/5
-BOSHQALAR BAHOSI: ${othersAvg.toFixed(1)}/5
-KO'R NUQTA FARQI: ${gap>0?'+':''}${gap.toFixed(2)} (${Math.abs(gap)>0.5?'MUHIM ko\'r nuqta bor':'Maqbul o\'z-o\'zini anglash'})`:'\nSelf-assessment: yo\'q'}
-
-GURUHLAR BO'YICHA BATAFSIL NATIJALAR:
-${groupDetail}
-
-IZOHLAR (${comments.length} ta):
-${comments.slice(0,10).join('\n')||'Izoh yo\'q'}
-
-CCL BENCHMARKS metodologiyasi asosida quyidagi bo'limlarni professional yozing:
+Quyidagi bo'limlarda yozing:
 
 ### Umumiy liderlik portreti
-3-4 jumlada. Uning liderlik "imzosi" qanday — boshqalardan farqi nima?
+3 jumlada.
 
-### Kuchli 3 kompetensiya (raqamlar bilan)
-Har biri: nima sababdan kuchli, qanday dalillar, bu biznesga qanday ta'sir qiladi.
+### Kuchli 3 kompetensiya
+Raqamlar bilan, har biri 1-2 jumlada.
 
 ### Rivojlanish talab qiluvchi 3 soha
-Har biri: nima uchun muhim, qanday ta'sir qiladi, nima uchun hozir e'tibor kerak.
+Nima uchun muhim.
 
-${hasSelf&&Math.abs(gap)>0.3?`### Ko'r nuqtalar (CCL Self-Awareness tahlili)
-O'z-o'zini baholash va boshqalar bahosi o'rtasidagi ${gap>0?'o\'ta ijobiy tasavvur (overrating)':'o\'ta kamtar tasavvur (underrating)'} — bu nima anglatadi va qanday xavfli?`:''}
+${hasSelf&&Math.abs(gap)>0.3?`### Ko'r nuqtalar
+O'z bahosi va boshqalar bahosi farqi nima anglatadi.`:''}
 
-### 90 kunlik CCL rivojlanish rejasi
-Qadam 1 (1-30 kun): [aniq harakat] — [o'lchash usuli]
-Qadam 2 (31-60 kun): [aniq harakat] — [o'lchash usuli]
-Qadam 3 (61-90 kun): [aniq harakat] — [o'lchash usuli]
+### 90 kunlik reja
+Qadam 1, 2, 3 — har biri aniq harakat va o'lchov.
 
-### Kouchning strategik tavsiyasi
-2-3 jumlada: eng muhim bir o'zgarish, uning sababi va kutilgan natija.
-
-Iltimos: jargon ishlatmang, konkret va amaliy bo'ling. Har bir fikrni raqamlar bilan asoslang.`;
+### Xulosa
+2 jumlada ilhomlantiruvchi.`;
 
   try{
     const resp=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:1500,messages:[{role:'user',content:prompt}]})});
     const data=await resp.json();
     const text=data.content?.map(b=>b.text||'').join('')||'';
-    document.getElementById('aiLoading').style.display='none';
-    el.innerHTML=text.replace(/### (.+)/g,'<h3>$1</h3>').replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>').replace(/\n\n/g,'</p><p>').replace(/^/,'<p>').replace(/$/, '</p>');
+    const el=document.getElementById('aiEl');
+    if(el) el.innerHTML=text.replace(/### (.+)/g,'<h3>$1</h3>').replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>').replace(/\n\n/g,'</p><p>').replace(/^/,'<p>').replace(/$/,'</p>');
   }catch(e){
-    document.getElementById('aiLoading').style.display='none';
-    el.innerHTML='<p style="color:var(--ink3);">AI tahlil vaqtincha mavjud emas.</p>';
+    const el=document.getElementById('aiEl');
+    if(el) el.innerHTML='<p style="color:var(--ink3);">AI tahlil vaqtincha mavjud emas.</p>';
   }
 }
 
-function loadDemo(){
-  appState.subject={name:'Bobur Karimov',role:'Bosh direktor',company:'TechUz LLC'};
-  appState.generated=true;
-  const dr=(base)=>{const r={};for(let i=0;i<25;i++)r[i]=Math.min(5,Math.max(1,base+Math.floor(Math.random()*2-0.3)));return r;};
-  appState.responses=[
-    {role:'xodim',ratings:dr(4),commentStrong:'Jamoani yaxshi birlashtiradi',commentImprove:'Vaqtni boshqarish kerak',isSelf:false},
-    {role:'xodim',ratings:dr(3),commentStrong:"Maqsad qo'yishda kuchli",commentImprove:'Kommunikatsiyani yaxshilash kerak',isSelf:false},
-    {role:'xodim',ratings:dr(4),commentStrong:'Innovatsion fikrlaydi',commentImprove:"Ba'zan tushuntirib bermaydi",isSelf:false},
-    {role:'do_st',ratings:dr(5),commentStrong:'Ishonchli va barqaror',commentImprove:'Kam dam oladi',isSelf:false},
-    {role:'do_st',ratings:dr(4),commentStrong:'Motivatsiya beradi',commentImprove:'',isSelf:false},
-    {role:'do_st',ratings:dr(4),commentStrong:'',commentImprove:'Stressni boshqarsin',isSelf:false},
-    {role:'rahbar',ratings:dr(3),commentStrong:'Natijaga intiluvchan',commentImprove:"Delegatsiya qilishni o'rgansin",isSelf:false},
-    {role:'rahbar',ratings:dr(3),commentStrong:'Strategik fikrlaydi',commentImprove:"Detail e'tibori kerak",isSelf:false},
-    {role:'rahbar',ratings:dr(4),commentStrong:'Yangilikka ochiq',commentImprove:'',isSelf:false},
-    {role:'hamkor',ratings:dr(4),commentStrong:'Hamkorlikka tayyor',commentImprove:'Javob tezligini oshirsin',isSelf:false},
-    {role:'hamkor',ratings:dr(4),commentStrong:'Professional',commentImprove:'',isSelf:false},
-    {role:'hamkor',ratings:dr(3),commentStrong:'',commentImprove:"Muzokaralar mahoratini rivojlantirsin",isSelf:false},
-    {role:'mijoz',ratings:dr(5),commentStrong:'Mijozni tushunadi',commentImprove:'',isSelf:false},
-    {role:'mijoz',ratings:dr(4),commentStrong:"Sifatga e'tibor beradi",commentImprove:'Muddatlarga rioya qilsin',isSelf:false},
-    {role:'mijoz',ratings:dr(4),commentStrong:'Ishonchli sherik',commentImprove:'',isSelf:false},
-    {role:'self',ratings:dr(4),commentStrong:"Strategik fikrlashim kuchli",commentImprove:"Kommunikatsiyani yaxshilashim kerak",isSelf:true},
-  ];
-  appState.selfDone=true; saveState(); showResults();
+// ═══════════════════════════════════════
+// SURVEY
+// ═══════════════════════════════════════
+function openEvalSurvey(){
+  const g=GROUPS.find(x=>x.id===CE.gid);
+  const data=db();
+  const subjectUser=data.users.find(u=>u.id===CE.userId);
+  document.getElementById('svBadge').textContent=g.icon+' '+g.label;
+  document.getElementById('svTitle').textContent=(subjectUser?.name||'Baholanuvchi')+' ni baholang';
+  document.getElementById('svDesc').textContent=`Siz ${g.label} sifatida 25 ta savolga javob berasiz.`;
+  document.getElementById('svAnon').style.display='flex';
+  surveyRole=CE.gid;
+  buildSurvey(GQ[CE.gid]||GQ.xodim);
+  pg('pgSurvey');
 }
 
-function goPage(id){
-  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
-  document.querySelectorAll('.nav-step').forEach(s=>s.classList.remove('active'));
-  document.getElementById('page-'+id).classList.add('active');
-  document.querySelector(`.nav-step[data-page="${id}"]`)?.classList.add('active');
-  window.scrollTo(0,0);
+function openSelfSurvey(){
+  document.getElementById('svBadge').textContent="🪞 O'z-o'zini baholash";
+  document.getElementById('svTitle').textContent="O'zingizni baholang";
+  document.getElementById('svDesc').textContent="CCL Self-Insight asosida — halol va ob'ektiv javob bering.";
+  document.getElementById('svAnon').style.display='none';
+  surveyRole='self';
+  buildSurvey(SQ);
+  pg('pgSurvey');
 }
-document.querySelectorAll('.nav-step').forEach(btn=>btn.addEventListener('click',()=>{if(btn.dataset.page==='results')showResults();else goPage(btn.dataset.page);}));
-document.addEventListener('keydown',e=>{if(e.key==='Enter'){const o=document.getElementById('loginOverlay');if(o&&!o.classList.contains('hidden'))attemptLogin();}});
 
-// ── BOOT ──
-const hasSaved=loadState();
-initEvaluatorGroups();
-const _p=new URLSearchParams(window.location.search);
-const _c=_p.get('code');
-if(_c){
-  const qci=document.getElementById('quickCodeInput');if(qci)qci.value=_c;
-  if(hasSaved&&appState.loginCodes[_c]){
-    const ev=appState.loginCodes[_c];
-    if(!appState.evaluators[ev.groupId][ev.idx].done){const g=GROUPS.find(x=>x.id===ev.groupId);setTimeout(()=>{goPage('survey');setTimeout(()=>openSurvey(g,_c),150);},100);}
-    else{const err=document.getElementById('quickLoginError');if(err){err.style.color='var(--green)';err.textContent='✓ Bu kod bilan baholash allaqachon yakunlangan.';err.style.display='block';}}
+function buildSurvey(sections){
+  surveyRatings={};
+  const container=document.getElementById('svQs');
+  container.innerHTML='';
+  let qi=0;
+  sections.forEach(sec=>{
+    const div=document.createElement('div'); div.className='qs';
+    div.innerHTML=`<div class="qs-title">${sec.cat}</div>`;
+    sec.qs.forEach(q=>{
+      const idx=qi++;
+      const item=document.createElement('div'); item.className='qi';
+      item.innerHTML=`<div class="qi-txt">${q}</div>
+        <div class="stars" id="s${idx}">${[1,2,3,4,5].map(v=>`<button class="star" onclick="rate(${idx},${v})" data-v="${v}">${v}</button>`).join('')}</div>
+        <div class="rl"><span>1 — Umuman emas</span><span>5 — Har doim</span></div>`;
+      div.appendChild(item);
+    });
+    container.appendChild(div);
+  });
+  document.getElementById('cmtS').value='';
+  document.getElementById('cmtI').value='';
+  updProg();
+}
+
+function rate(qi,val){
+  document.getElementById('s'+qi).querySelectorAll('.star').forEach(b=>b.classList.toggle('on',+b.dataset.v<=val));
+  surveyRatings[qi]=val; updProg();
+}
+
+function updProg(){
+  const done=Object.keys(surveyRatings).length,total=25;
+  document.getElementById('svProg').style.width=(done/total*100)+'%';
+  document.getElementById('svSubmit').disabled=done<total;
+}
+
+function submitSurvey(){
+  const isSelf=surveyRole==='self';
+  const data=db();
+
+  if(isSelf){
+    if(!data.sessions[CU.id]) data.sessions[CU.id]={evaluators:[],responses:[]};
+    data.sessions[CU.id].responses.push({
+      id:uid(), gid:'self', isSelf:true,
+      ratings:{...surveyRatings},
+      cmtS:document.getElementById('cmtS').value,
+      cmtI:document.getElementById('cmtI').value,
+      ts:Date.now()
+    });
+    save(data);
+    toast('✓ O\'zingizni baholash saqlandi!');
+    showSubject(); stab(2);
+  } else {
+    const sess=data.sessions[CE.userId];
+    if(sess){
+      sess.responses.push({
+        id:uid(), gid:CE.gid, isSelf:false,
+        ratings:{...surveyRatings},
+        cmtS:document.getElementById('cmtS').value,
+        cmtI:document.getElementById('cmtI').value,
+        ts:Date.now()
+      });
+      const ev=sess.evaluators.find(e=>e.code===CE.code);
+      if(ev) ev.done=true;
+      save(data);
+    }
+    pg('pgDone');
   }
+  CE=null; surveyRatings={};
 }
-if(hasSaved&&appState.generated){renderLinksTable();renderSelfAssessCard();}
+
+// ═══════════════════════════════════════
+// BOOT
+// ═══════════════════════════════════════
+db(); // init if empty
+pg('pgLogin');
 </script>
 </body>
 </html>
